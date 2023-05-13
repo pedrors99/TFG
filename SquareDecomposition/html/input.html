@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Square Decomposition</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  </head>
+
+  <body class="has-text-centered">
+    <form action="http://localhost:5000/" method="post">
+      <div class="container">
+        <h1 class="title" style="font-size:3vw">
+          Square Decomposition
+        </h1>
+      </div>
+
+      <hr>
+
+      <div class="container">
+        <p class="subtitle">
+          Entrada
+        </p>
+      </div>
+
+      <br>
+
+      <div class="container" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
+        <div class="container">
+          <span>x (Secreto): &nbsp</span>
+          <input type="text" name="x" size="65" maxlength="64" value="13"/>
+        </div>
+
+        <br>
+
+        <div class="container">
+          <span> n (Módulo): &nbsp</span>
+          <input type="text" name="n" size="65" maxlength="64" value="221"/>
+        </div>
+      </div>
+
+      <br><br>
+
+      <div class="container">
+        <p class="subtitle">
+          Intervalo [a, b]:
+        </p>
+      </div>
+
+      <div class="container" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
+        <div class="container">
+          <span>a: &nbsp</span>
+          <input type="text" name="a" size="65" maxlength="64" value="0"/>
+        </div>
+
+        <br>
+
+        <div class="container">
+          <span>b: &nbsp</span>
+          <input type="text" name="b" size="65" maxlength="64" value="30"/>
+        </div>
+      </div>
+
+      <br><br>
+
+      <div class="container">
+        <p class="subtitle">
+          Bases:
+        </p>
+      </div>
+
+      <div class="container" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
+        <div class="container">
+          <span>g: &nbsp</span>
+          <input type="text" name="g" size="65" maxlength="64" value="7"/>
+        </div>
+
+        <br>
+
+        <div class="container">
+          <span>h: &nbsp</span>
+          <input type="text" name="h" size="65" maxlength="64" value="14"/>
+        </div>
+      </div>
+
+      <br><br>
+
+      <div class="container">
+        <p class="subtitle">
+          Parámetros de seguridad:
+        </p>
+      </div>
+
+      <div class="container" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
+        <div class="container">
+          <span>t: &nbsp</span>
+          <input type="text" name="t" size="65" maxlength="64" value="5"/>
+        </div>
+
+        <br>
+
+        <div class="container">
+          <span>l: &nbsp</span>
+          <input type="text" name="l" size="65" maxlength="64" value="3"/>
+        </div>
+
+        <br>
+
+        <div class="container">
+          <span>s: &nbsp</span>
+          <input type="text" name="s" size="65" maxlength="64" value="4"/>
+        </div>
+      </div>
+
+      <hr>
+
+      <button type="submit" class="button is-primary is-centered is-outlined"> Continuar </button>
+
+    </form>
+  </body>
+</html>

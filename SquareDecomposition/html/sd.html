@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Square Decomposition</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+    <style>
+      .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 15px;
+      }
+
+      .active, .collapsible:hover {
+        background-color: #555;
+      }
+
+      .collapsible:after {
+        content: '\002B';
+        color: white;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+      }
+
+      .active:after {
+        content: "\2212";
+      }
+
+      .content {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+      }
+    </style>
+
+  </head>
+
+  <body class="has-text-centered">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <div class="container">
+      <h1 class="title" style="font-size:3vw">
+        Square Decomposition
+      </h1>
+    </div>
+
+    <hr>
+
+    <div class="container">
+      <h1 style="font-size:1.5vw"> Probador </h1>
+
+      <br>
+
+      <div class="container">
+        <p>
+          El objetivo del algoritmo es probar que x &isin; [a, b] ({{inputs.x}} &isin; [{{inputs.a}}, {{inputs.b}}]), o equivalentemente:
+        </p>
+        <ul>
+          <li>&#8226; Probar x - a &#8805; 0 &#8594; {{inputs.x}} - {{inputs.a}} = {{ext_wt.xa}} &#8805; 0</li>
+          <li>&#8226; Probar b - x &#8805; 0 &#8594; {{inputs.b}} - {{inputs.x}} = {{ext_wt.xb}} &#8805; 0</li>
+        </ul>
+        <br>
+        <p>
+          Para ello crearemos dos variables, E<sub>a<sub>1</sub></sub> y E<sub>b<sub>1</sub></sub>, que ocultarán secretos positivos, x<sub>a<sub>1</sub></sub><sup>2</sup> y x<sub>b<sub>1</sub></sub><sup>2</sup>, al ser cuadrados, utilizando Prove<sub>S</sub>. <br>
+
+          Creamos otras dos variables, E<sub>a<sub>2</sub></sub> y E<sub>b<sub>2</sub></sub>, que esconderán valores mayores que &#952;, x<sub>a<sub>2</sub></sub> y x<sub>b<sub>2</sub></sub>,utilizando Prove<sub>LI</sub> para demostrar que pertenecen a [&#952;, &#952;] <br>
+
+          Entonces, tenemos que el valor escondido en E<sub>a</sub> es la suma de los números secretos escondidos en E<sub>a<sub>1</sub></sub> y en E<sub>a<sub>2</sub></sub>, y que el valor escondido en E<sub>b</sub> es la suma de los números secretos escondidos en E<sub>b<sub>1</sub></sub> y en E<sub>b<sub>2</sub></sub>, ya que: <br>
+          $$E_{a} = \frac{E}{g^{a}} = g^{x-a}h^{r} = g^{x_{a}}h^{r} = g^{x_{a_{1}}^{2} + x_{a_{2}}}h^{r_{a_{1}} + r_{a_{2}}} = E_{a_{1}} \cdot E_{a_{2}}$$
+          $$E_{b} = \frac{g^{b}}{E} = g^{b-x}h^{-r} = g^{x_{b}}h^{-r} = g^{x_{b_{1}}^{2} + x_{b_{2}}}h^{r_{b_{1}} + r_{b_{2}}} = E_{b_{1}} \cdot E_{b_{2}}$$
+
+          Con todo esto, tenemos que E<sub>a</sub> y E<sub>b</sub> esconden números mayores que -&#952;, ya que ambos son la suma de un número positivo y un número mayor que -&#952;. <br>
+
+          Si x es el número secreto escondido en E, estamos probando que x - a &#8805; -&#952; y que b - x &#8805; -&#952;, es decir, que x pertenece a [a - &#952;, b + &#952;], donde:
+          $$\theta = 2^{t+l+1}\sqrt{b - a}$$
+        </p>
+      </div>
+
+      <br>
+
+      <button type="button" class="collapsible"><b>Entrada</b></button>
+      <div class="content" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
+        <div class="container" style="width:10%; position:relative;">
+          <div class="columns">
+            <div class="column">
+              <p> <b> x: &nbsp</b> </p>
+              <p> <b> n: &nbsp</b> </p>
+
+              <br>
+
+              <p> <b> a: &nbsp</b> </p>
+              <p> <b> b: &nbsp</b> </p>
+
+              <br>
+
+              <p> <b> g: &nbsp</b> </p>
+              <p> <b> h: &nbsp</b> </p>
+
+              <br>
+
+              <p> <b> t: &nbsp</b> </p>
+              <p> <b> l: &nbsp</b> </p>
+              <p> <b> s: &nbsp</b> </p>
+            </div>
+
+            <div class="column">
+              <p> {{inputs.x}} </p>
+              <p> {{inputs.n}} </p>
+
+              <br>
+
+              <p> {{inputs.a}} </p>
+              <p> {{inputs.b}} </p>
+
+              <br>
+
+              <p> {{inputs.g}} </p>
+              <p> {{inputs.h}} </p>
+
+              <br>
+
+              <p> {{params.t}} </p>
+              <p> {{params.l}} </p>
+              <p> {{params.s}} </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <button type="button" class="collapsible"><b>Inicialización de variables</b></button>
+      <div class="content" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
+        <p>r &isin; <sub>R</sub> [-2<sup>s</sup>n-1, 2<sup>s</sup>n+1] &rarr; r &isin; <sub>R</sub> [-2<sup>{{params.s}}</sup>·{{inputs.n}}-1, 2<sup>{{params.s}}</sup>·{{inputs.n}}+1] &rarr; r &isin; [{{r.int1}}, {{r.int2}}] &rarr; r = {{r.r}}</p>
+
+        <br>
+
+        <p>E = g<sup>x</sup> h<sup>r</sup> (mod n) = {{inputs.g}}<sup>{{inputs.x}}</sup> {{inputs.h}}<sup>{{r.r}}</sup> (mod {{inputs.n}}) = {{proof_wt.E}}</p>
+      </div>
+
+      <br>
+
+      <button type="button" class="collapsible"><b>Algoritmo</b></button>
+      <div class="content" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
+        <p>E<sub>a</sub> = E/g<sup>a</sup> = {{proof_wt.E}}/{{inputs.g}}<sup>{{inputs.a}}</sup> = {{proof_wt.Ea}}</p>
+        <p>E<sub>b</sub> = g<sup>b</sup>/E = {{inputs.g}}<sup>{{inputs.a}}</sup>/{{proof_wt.E}} = {{proof_wt.Eb}}</p>
+
+        <br>
+
+        <p>x<sub>a</sub> = x - a = {{inputs.x}} - {{inputs.a}} = {{ext_wt.xa}}</p>
+        <p>x<sub>b</sub> = b - x = {{inputs.b}} - {{inputs.x}} = {{ext_wt.xb}}</p>
+
+        <p>x<sub>a<sub>1</sub></sub> = &#8970;&radic;(x - a)&#8971; = &#8970;&radic;({{inputs.x}} - {{inputs.a}})&#8971; = {{ext_wt.xa1}}</p>
+        <p >x<sub>a<sub>2</sub></sub> = x<sub>a</sub> - x<sub>a<sub>1</sub></sub><sup>2</sup> = {{ext_wt.xa}} - {{ext_wt.xa1 * ext_wt.xa1}} = {{ext_wt.xa2}}</p>
+        <p>x<sub>b<sub>1</sub></sub> = &#8970;&radic;(b - x)&#8971; = &#8970;&radic;({{inputs.b}} - {{inputs.x}})&#8971; = {{ext_wt.xb1}}</p>
+        <p>x<sub>b<sub>2</sub></sub> = x<sub>b</sub> - x<sub>b<sub>1</sub></sub><sup>2</sup> = {{ext_wt.xb}} - {{ext_wt.xb1 * ext_wt.xb1}} = {{ext_wt.xb2}}</p>
+
+        <br>
+
+        <p>Seleccionamos de forma aleatoria r<sub>a<sub>1</sub></sub> y r<sub>a<sub>2</sub></sub> tal que</p>
+        <p>r<sub>a<sub>1</sub></sub> + r<sub>a<sub>2</sub></sub> = r = {{r.r}}</p>
+        <p>r<sub>a<sub>1</sub></sub> = {{ext_wt.ra1}}</p>
+        <p>r<sub>a<sub>2</sub></sub> = {{ext_wt.ra2}}</p>
+
+        <br>
+
+        <p>Seleccionamos de forma aleatoria r<sub>b<sub>1</sub></sub> y r<sub>b<sub>2</sub></sub> tal que</p>
+        <p>r<sub>b<sub>1</sub></sub> + r<sub>b<sub>2</sub></sub> = -r = {{-r.r}}</p>
+        <p>r<sub>b<sub>1</sub></sub> = {{ext_wt.rb1}}</p>
+        <p>r<sub>b<sub>2</sub></sub> = {{ext_wt.rb2}}</p>
+
+        <br>
+
+        <p>E<sub>a<sub>1</sub></sub> = g<sup>x<sub>a<sub>1</sub></sub><sup>2</sup></sup> h<sup>r<sub>a<sub>1</sub></sub></sup> (mod n) = {{inputs.g}}<sup>{{ext_wt.xa1}}<sup>2</sup></sup> {{inputs.h}}<sup>{{ext_wt.ra1}}</sup> (mod {{inputs.n}}) = {{proof_wt.Ea1}}</p>
+        <p>E<sub>a<sub>2</sub></sub> = g<sup>x<sub>a<sub>2</sub></sub></sup> h<sup>r<sub>a<sub>2</sub></sub></sup> (mod n) = {{inputs.g}}<sup>{{ext_wt.xa2}}</sup> {{inputs.h}}<sup>{{ext_wt.ra2}}</sup> (mod {{inputs.n}}) = {{proof_wt.Ea2}}</p>
+        <p>E<sub>b<sub>1</sub></sub> = g<sup>x<sub>b<sub>1</sub></sub><sup>2</sup></sup> h<sup>r<sub>b<sub>1</sub></sub></sup> (mod n) = {{inputs.g}}<sup>{{ext_wt.xa2}}<sup>2</sup></sup> {{inputs.h}}<sup>{{ext_wt.ra2}}</sup> (mod {{inputs.n}}) = {{proof_wt.Eb1}}</p>
+        <p>E<sub>b<sub>2</sub></sub> = g<sup>x<sub>b<sub>2</sub></sub></sup> h<sup>r<sub>b<sub>2</sub></sub></sup> (mod n) = {{inputs.g}}<sup>{{ext_wt.xb2}}</sup> {{inputs.h}}<sup>{{ext_wt.rb2}}</sup> (mod {{inputs.n}}) = {{proof_wt.Eb2}}</p>
+
+        <br>
+
+        <p>proof<sub>S<sub>a</sub></sub> = Prove<sub>S</sub> (x<sub>a<sub>1</sub></sub>, r<sub>a<sub>1</sub></sub>, E<sub>a<sub>1</sub></sub>) = ({{proof_sa.E}}, {{proof_sa.F}}, ({{proof_sa.proof_c}}, {{proof_sa.proof_D}}, {{proof_sa.proof_D1}}, {{proof_sa.proof_D2}}))</p>
+        <p>proof<sub>S<sub>b</sub></sub> = Prove<sub>S</sub> (x<sub>b<sub>1</sub></sub>, r<sub>b<sub>1</sub></sub>, E<sub>b<sub>1</sub></sub>) = ({{proof_sb.E}}, {{proof_sb.F}}, ({{proof_sb.proof_c}}, {{proof_sb.proof_D}}, {{proof_sb.proof_D1}}, {{proof_sb.proof_D2}}))</p>
+        <br>
+        <p>proof<sub>LI<sub>a</sub></sub> = Prove<sub>LI</sub> (x<sub>a<sub>2</sub></sub>, r<sub>a<sub>2</sub></sub>, E<sub>a<sub>2</sub></sub>) = ({{proof_lia.C}}, {{proof_lia.D1}}, {{proof_lia.D2}}, {{proof_lia.c}})</p>
+        <p>proof<sub>LI<sub>b</sub></sub> = Prove<sub>LI</sub> (x<sub>b<sub>2</sub></sub>, r<sub>b<sub>2</sub></sub>, E<sub>b<sub>2</sub></sub>) = ({{proof_lib.C}}, {{proof_lib.D1}}, {{proof_lib.D2}}, {{proof_lib.c}})</p>
+      </div>
+
+      <br>
+
+      <button type="button" class="collapsible"><b>Salida</b></button>
+      <div class="content" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
+        <div class="container" style="width:10%; position:relative;">
+          <div class="columns">
+            <div class="column">
+              <p> <b> E<sub>a<sub>1</sub></sub>: &nbsp</b> </p>
+              <p> <b> E<sub>a<sub>2</sub></sub>: &nbsp</b> </p>
+
+              <hr>
+
+              <p> <b> E<sub>b<sub>1</sub></sub>: &nbsp</b> </p>
+              <p> <b> E<sub>b<sub>2</sub></sub>: &nbsp</b> </p>
+            </div>
+
+            <div class="column">
+              <p> {{proof_wt.Ea1}} <sub><sub></sub></sub></p>
+              <p> {{proof_wt.Ea2}} <sub><sub></sub></sub></p>
+
+              <hr>
+
+              <p> {{proof_wt.Eb1}} <sub><sub></sub></sub></p>
+              <p> {{proof_wt.Eb2}} <sub><sub></sub></sub></p>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="container" style="width:40%; position:relative;">
+          <div class="columns">
+            <div class="column">
+              <p> <b> proof<sub>S<sub>a</sub></sub>: &nbsp</b> </p>
+              <p> <b> proof<sub>S<sub>b</sub></sub>: &nbsp</b> </p>
+
+              <br>
+
+              <p> <b> proof<sub>LI<sub>a</sub></sub>: &nbsp</b> </p>
+              <p> <b> proof<sub>LI<sub>b</sub></sub>: &nbsp</b> </p>
+            </div>
+
+            <div class="column is-three-quarters">
+              <p> ({{proof_sa.E}}, {{proof_sa.F}}, ({{proof_sa.proof_c}}, {{proof_sa.proof_D}}, {{proof_sa.proof_D1}}, {{proof_sa.proof_D2}})) <sub><sub></sub></sub></p>
+              <p> ({{proof_sb.E}}, {{proof_sb.F}}, ({{proof_sb.proof_c}}, {{proof_sb.proof_D}}, {{proof_sb.proof_D1}}, {{proof_sb.proof_D2}})) <sub><sub></sub></sub></p>
+
+              <br>
+
+              <p> ({{proof_lia.C}}, {{proof_lia.D1}}, {{proof_lia.D2}}, {{proof_lia.c}}) <sub><sub></sub></sub></p>
+              <p> ({{proof_lib.C}}, {{proof_lib.D1}}, {{proof_lib.D2}}, {{proof_lib.c}}) <sub><sub></sub></sub></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            }
+          });
+        }
+      </script>
+    </div>
+  </body>
+</html>
