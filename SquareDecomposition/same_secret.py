@@ -67,7 +67,10 @@ def proveSS_Flask(x, n, r1, r2, g1, g2, h1, h2, b, params, debug=False):
     D1 = eta1 + c * r1
     D2 = eta2 + c * r2
 
-    ext_ss = {'w': int(w), 'eta1': int(eta1), 'eta2': int(eta2), 'omega1': int(omega1), 'omega2': int(omega2)}
+    ext_ss = {'w': int(w), 'int1': int(2 ** (params.l + params.t) * b - 1),
+              'int2': int(2 ** (params.l + params.t + params.s1) * n - 1),
+              'int3': int(2 ** (params.l + params.t + params.s2) * n - 1), 'eta1': int(eta1), 'eta2': int(eta2),
+              'omega1': int(omega1), 'omega2': int(omega2)}
 
     if debug:
         print("\t ---Prove Same Secret: Debug--- \t")

@@ -5,117 +5,249 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Square Decomposition</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+      .footer {
+        width: 100%;
+        padding: 10px 0;
+        position: fixed;
+        background-color: rgba(220, 220, 220, 0.8);
+        border-style: solid hidden hidden hidden;
+        bottom: 0;
+        left: 0
+      }
+
+      .collapsible {
+        background-color: #3E8ED0;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 15px;
+        border-radius: 5px 5px 0px 0px;
+      }
+
+      .collapsible:after {
+        content: '\002B';
+        color: white;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+      }
+
+      .active:after {
+        content: "\2212";
+      }
+
+      .content {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+      }
+    </style>
   </head>
 
   <body class="has-text-centered">
+    <h1 class="title" style="font-size:3vw">
+      Square Decomposition
+    </h1>
+
     <form action="http://localhost:5000/" method="post">
-      <div class="container">
-        <h1 class="title" style="font-size:3vw">
-          Square Decomposition
-        </h1>
-      </div>
+      <div class="block">
+        <div class="block">
+          <button type="button" class="collapsible" style="width:75%"><b>Entrada</b></button>
+          <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
 
-      <hr>
+            <br>
 
-      <div class="container">
-        <p class="subtitle">
-          Entrada
-        </p>
-      </div>
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">x (Secreto)</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <p class="control">
+                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="x" maxlength="64" value="13">
+                  </p>
+                </div>
+              </div>
+            </div>
 
-      <br>
+            <br>
 
-      <div class="container" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
-        <div class="container">
-          <span>x (Secreto): &nbsp</span>
-          <input type="text" name="x" size="65" maxlength="64" value="13"/>
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">n (Módulo)</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <p class="control">
+                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="n" maxlength="64" value="221">
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+          </div>
         </div>
 
-        <br>
+        <div class="block">
+          <button type="button" class="collapsible" style="width:75%"><b>Intervalo [a, b]</b></button>
+          <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
 
-        <div class="container">
-          <span> n (Módulo): &nbsp</span>
-          <input type="text" name="n" size="65" maxlength="64" value="221"/>
+            <br>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">a</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <p class="control">
+                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="a" maxlength="64" value="0">
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">b</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <p class="control">
+                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="b" maxlength="64" value="30">
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+          </div>
         </div>
+
+        <div class="block">
+          <button type="button" class="collapsible" style="width:75%"><b>Bases</b></button>
+          <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+
+            <br>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">g</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <p class="control">
+                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="g" maxlength="64" value="7">
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">h</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <p class="control">
+                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="h" maxlength="64" value="14">
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+          </div>
+        </div>
+
+        <div class="block">
+          <button type="button" class="collapsible" style="width:75%"><b>Parámetros de seguridad</b></button>
+          <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+
+            <br>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">t</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <p class="control">
+                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="t" maxlength="64" value="5">
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">l</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <p class="control">
+                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="l" maxlength="64" value="3">
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">s</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <p class="control">
+                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="s" maxlength="64" value="4">
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+          </div>
+        </div>
+      </div >
+
+      <div class="footer has-text-centered">
+        <button type="submit" class="button is-primary is-centered"> Continuar </button>
       </div>
-
-      <br><br>
-
-      <div class="container">
-        <p class="subtitle">
-          Intervalo [a, b]:
-        </p>
-      </div>
-
-      <div class="container" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
-        <div class="container">
-          <span>a: &nbsp</span>
-          <input type="text" name="a" size="65" maxlength="64" value="0"/>
-        </div>
-
-        <br>
-
-        <div class="container">
-          <span>b: &nbsp</span>
-          <input type="text" name="b" size="65" maxlength="64" value="30"/>
-        </div>
-      </div>
-
-      <br><br>
-
-      <div class="container">
-        <p class="subtitle">
-          Bases:
-        </p>
-      </div>
-
-      <div class="container" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
-        <div class="container">
-          <span>g: &nbsp</span>
-          <input type="text" name="g" size="65" maxlength="64" value="7"/>
-        </div>
-
-        <br>
-
-        <div class="container">
-          <span>h: &nbsp</span>
-          <input type="text" name="h" size="65" maxlength="64" value="14"/>
-        </div>
-      </div>
-
-      <br><br>
-
-      <div class="container">
-        <p class="subtitle">
-          Parámetros de seguridad:
-        </p>
-      </div>
-
-      <div class="container" style="background-color:aliceblue; border:1px solid black; border-color:#000000; border-width:1px; padding:5px">
-        <div class="container">
-          <span>t: &nbsp</span>
-          <input type="text" name="t" size="65" maxlength="64" value="5"/>
-        </div>
-
-        <br>
-
-        <div class="container">
-          <span>l: &nbsp</span>
-          <input type="text" name="l" size="65" maxlength="64" value="3"/>
-        </div>
-
-        <br>
-
-        <div class="container">
-          <span>s: &nbsp</span>
-          <input type="text" name="s" size="65" maxlength="64" value="4"/>
-        </div>
-      </div>
-
-      <hr>
-
-      <button type="submit" class="button is-primary is-centered is-outlined"> Continuar </button>
-
     </form>
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            }
+          });
+        }
+      </script>
   </body>
 </html>

@@ -28,7 +28,7 @@ def proveS(x, n, r1, g, h, b, params, debug=False):
 
     if debug:
         print("\t ---Prove Square: Debug--- \t")
-        print("x: {}, n: {}, r1: {}, g: {}, h: {}, b: {}, params.t: {}, params.l: {}, params.s: {}",format(x, n, r1, g, h, b, params.t, params.l, params.s))
+        print("x: {}, n: {}, r1: {}, g: {}, h: {}, b: {}, params.t: {}, params.l: {}, params.s: {}".format(x, n, r1, g, h, b, params.t, params.l, params.s))
         print("r2: {}, r3: {}, E: {}, F: {}\n".format(r2, r3, E, F))
 
     proof = proveSS(x, n, r3, r2, F, g, h, h, b, params_ss, debug)
@@ -58,7 +58,7 @@ def proveS_Flask(x, n, r1, g, h, b, params, debug=False):
 
     if debug:
         print("\t ---Prove Square: Debug--- \t")
-        print("x: {}, n: {}, r1: {}, g: {}, h: {}, b: {}, params.t: {}, params.l: {}, params.s: {}",format(x, n, r1, g, h, b, params.t, params.l, params.s))
+        print("x: {}, n: {}, r1: {}, g: {}, h: {}, b: {}, params.t: {}, params.l: {}, params.s: {}".format(x, n, r1, g, h, b, params.t, params.l, params.s))
         print("r2: {}, r3: {}, E: {}, F: {}\n".format(r2, r3, E, F))
     return proofS(E, F, proof), ext_s, ext_ss
 
