@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Square Decomposition</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+      .footer {
+        width: 100%;
+        padding: 10px 0;
+        position: fixed;
+        background-color: rgba(220, 220, 220, 0.8);
+        border-style: solid hidden hidden hidden;
+        bottom: 0;
+        left: 0
+      }
+
+      .collapsible {
+        background-color: #3E8ED0;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 15px;
+        border-radius: 5px 5px 0px 0px;
+      }
+
+      .collapsible:after {
+        content: '\002B';
+        color: white;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+      }
+
+      .active:after {
+        content: "\2212";
+      }
+
+      .content {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+      }
+    </style>
+  </head>
+
+  <body class="has-text-centered">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <h1 class="title" style="font-size:3vw">
+      Square Decomposition: Square
+    </h1>
+
+    <div class="block">
+      <div class="block">
+        <button type="button" class="collapsible" style="width:75%"><b>Entrada</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <div class="container" style="width:10%; position:relative;">
+            <table>
+              <tbody>
+                <tr>
+                  <th> x: </th>
+                  <td> {{proof.x}} </td>
+                </tr>
+                <tr>
+                  <th> n: </th>
+                  <td> {{inputs.n}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> a: </th>
+                  <td> {{inputs.a}} </td>
+                </tr>
+                <tr>
+                  <th> b: </th>
+                  <td> {{inputs.b}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> g1: </th>
+                  <td> {{proof.g1}} </td>
+                </tr>
+                <tr>
+                  <th> g2: </th>
+                  <td> {{proof.g2}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> h1: </th>
+                  <td> {{proof.h}} </td>
+                </tr>
+                <tr>
+                  <th> h2: </th>
+                  <td> {{proof.h}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> r1: </th>
+                  <td> {{proof.r1}} </td>
+                </tr>
+                <tr>
+                  <th> r2: </th>
+                  <td> {{proof.r2}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> t: </th>
+                  <td> {{params.t}} </td>
+                </tr>
+                <tr>
+                  <th> l: </th>
+                  <td> {{params.l}} </td>
+                </tr>
+                <tr>
+                  <th> s1: </th>
+                  <td> {{params.s}} </td>
+                </tr>
+                <tr>
+                  <th> s2: </th>
+                  <td> {{params.s}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <button type="button" class="collapsible" style="width:75%"><b>Algoritmo</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+            <p>w &isin;<sub>R</sub> [1, 2<sup>l + t</sup>b - 1] &rarr; w &isin;<sub>R</sub> [1, 2<sup>{{params.t}} + {{params.l}}</sup>{{inputs.b}} - 1] &rarr; w &isin;<sub>R</sub> [1, {{ext.int1}}] &rarr; w = {{ext.w}}</p>
+            <p>&eta;<sub>1</sub> &isin;<sub>R</sub> [1, 2<sup>l + t + s<sub>1</sub></sup>n - 1] &rarr; &eta;<sub>1</sub> &isin;<sub>R</sub> [1, 2<sup>{{params.t}} + {{params.l}} + {{params.s}}</sup>{{inputs.n}} - 1] &rarr; &eta;<sub>1</sub> &isin;<sub>R</sub> [1, {{ext.int2}}] &rarr; &eta;<sub>1</sub> = {{ext.eta1}}</p>
+            <p>&eta;<sub>2</sub> &isin;<sub>R</sub> [1, 2<sup>l + t + s<sub>2</sub></sup>n - 1] &rarr; &eta;<sub>2</sub> &isin;<sub>R</sub> [1, 2<sup>{{params.t}} + {{params.l}} + {{params.s}}</sup>{{inputs.n}} - 1] &rarr; &eta;<sub>2</sub> &isin;<sub>R</sub> [1, {{ext.int3}}] &rarr; &eta;<sub>2</sub> = {{ext.eta2}}</p>
+            <p>&#937;<sub>1</sub> = g<sub>1</sub><sup>w</sup> h<sub>1</sub><sup>&eta;<sub>1</sub></sup> (mod n) = {{proof.g1}}<sup>{{ext.w}}</sup> {{proof.h}}<sup>{{ext.eta1}}</sup> (mod {{inputs.n}}) = {{ext.omega1}}</p>
+            <p>&#937;<sub>2</sub> = g<sub>2</sub><sup>w</sup> h<sub>2</sub><sup>&eta;<sub>2</sub></sup> (mod n) = {{proof.g2}}<sup>{{ext.w}}</sup> {{proof.h}}<sup>{{ext.eta2}}</sup> (mod {{inputs.n}}) = {{ext.omega2}}</p>
+            <p>c = Hash(&#937;<sub>1</sub> || &#937;<sub>2</sub>) = Hash({{ext.omega1}} || {{ext.omega2}}) = {{proof_s.proof_c}}</p>
+            <p>D = w + cx = {{ext.w}} + {{proof_s.proof_c}} &middot; {{proof.x}} = {{proof_s.proof_D}}</p>
+            <p>D<sub>1</sub> = &eta;<sub>1</sub> + cr<sub>1</sub> = {{ext.eta1}} + {{proof_s.proof_c}} &middot; {{proof.r1}} = {{proof_s.proof_D1}}</p>
+            <p>D<sub>2</sub> = &eta;<sub>2</sub> + cr<sub>2</sub> = {{ext.eta2}} + {{proof_s.proof_c}} &middot; {{proof.r2}} = {{proof_s.proof_D2}}</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <button type="button" class="collapsible" style="width:75%"><b>Salida</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <div class="container" style="width:10%; position:relative;">
+            <table>
+              <tbody>
+                <tr>
+                  <th> c: </th>
+                  <td> {{proof_s.proof_c}} </td>
+                </tr>
+                <tr>
+                  <th> D: </th>
+                  <td> {{proof_s.proof_D}} </td>
+                </tr>
+                <tr>
+                  <th> D1: </th>
+                  <td> {{proof_s.proof_D1}} </td>
+                </tr>
+                <tr>
+                  <th> D2: </th>
+                  <td> {{proof_s.proof_D2}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer has-text-centered">
+      <form method="post">
+        <button type="submit" class="button is-primary is-centered" name="proveSS" value="back" style="margin-left: 50px; margin-right: 50px;"> Volver </button>
+      </form>
+    </div>
+
+  <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            }
+          });
+        }
+      </script>
+  </body>
+</html>

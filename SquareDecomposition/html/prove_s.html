@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Square Decomposition</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+      .footer {
+        width: 100%;
+        padding: 10px 0;
+        position: fixed;
+        background-color: rgba(220, 220, 220, 0.8);
+        border-style: solid hidden hidden hidden;
+        bottom: 0;
+        left: 0
+      }
+
+      .collapsible {
+        background-color: #3E8ED0;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 15px;
+        border-radius: 5px 5px 0px 0px;
+      }
+
+      .collapsible:after {
+        content: '\002B';
+        color: white;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+      }
+
+      .active:after {
+        content: "\2212";
+      }
+
+      .content {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+      }
+    </style>
+  </head>
+
+  <body class="has-text-centered">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <h1 class="title" style="font-size:3vw">
+      Square Decomposition: Square
+    </h1>
+
+    <div class="block">
+      <div class="block">
+        <button type="button" class="collapsible" style="width:75%"><b>Entrada</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <div class="container" style="width:10%; position:relative;">
+            <table>
+              <tbody>
+                <tr>
+                  <th> x: </th>
+                  <td> {{ext.x}} </td>
+                </tr>
+                <tr>
+                  <th> n: </th>
+                  <td> {{inputs.n}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> a: </th>
+                  <td> {{inputs.a}} </td>
+                </tr>
+                <tr>
+                  <th> b: </th>
+                  <td> {{inputs.b}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> g: </th>
+                  <td> {{inputs.g}} </td>
+                </tr>
+                <tr>
+                  <th> h: </th>
+                  <td> {{inputs.h}} </td>
+                </tr>
+                <tr>
+                  <th> r1: </th>
+                  <td> {{ext.r1}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> t: </th>
+                  <td> {{params.t}} </td>
+                </tr>
+                <tr>
+                  <th> l: </th>
+                  <td> {{params.l}} </td>
+                </tr>
+                <tr>
+                  <th> s: </th>
+                  <td> {{params.s}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <button type="button" class="collapsible" style="width:75%"><b>Algoritmo</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <p>E = g<sup>x<sup>2</sup></sup> h<sup>r<sub>1</sub></sup> (mod n) = {{inputs.g}}<sup>{{ext.x * ext.x}}</sup> {{inputs.h}}<sup>{{ext.r1}}</sup> (mod {{inputs.n}}) = {{ext_s.E}}</p>
+          <p>r<sub>2</sub> &isin; <sub>R</sub> [-2<sup>s</sup>n-1, 2<sup>s</sup>n+1] &rarr; r<sub>2</sub> &isin; <sub>R</sub> [-2<sup>{{params.s}}</sup>·{{inputs.n}}-1, 2<sup>{{params.s}}</sup>·{{inputs.n}}+1] &rarr; r<sub>2</sub> &isin; [{{ext.int1}}, {{ext.int2}}] &rarr; r = {{ext_s.r2}}</p>
+          <p>F = g<sup>x</sup> h<sup>r<sub>2</sub></sup> (mod n) = {{inputs.g}}<sup>{{ext.x}}</sup> {{inputs.h}}<sup>{{ext_s.r2}}</sup> (mod {{inputs.n}}) = {{ext_s.F}}</p>
+          <p>r<sub>3</sub> = r<sub>1</sub> - r<sub>2</sub>x = {{ext.r1}} - {{ext_s.r2}} &middot; {{ext.x}} = {{ext_s.r3}}</p>
+          <br>
+          <p>proof<sub>SS</sub> = Prove<sub>SS</sub>(x, r<sub>2</sub>, r<sub>3</sub>, E, F) = ({{proof.proof_c}}, {{proof.proof_D}}, {{proof.proof_D1}}, {{proof.proof_D2}})</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <button type="button" class="collapsible" style="width:75%"><b>Prueba Prove<sub>SS</sub></b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <br>
+          <form method="post">
+            <button type="submit" class="button is-dark is-centered" name="proveS" value="proof_ss"> proof<sub>SS</sub> </button>
+          </form>
+          <br>
+        </div>
+      </div>
+
+      <div class="block">
+        <button type="button" class="collapsible" style="width:75%"><b>Salida</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <div class="container" style="width:10%; position:relative;">
+            <table>
+              <tbody>
+                <tr>
+                  <th> E: </th>
+                  <td> {{proof.E}} </td>
+                </tr>
+                <tr>
+                  <th> F: </th>
+                  <td> {{proof.F}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="container" style="width:30%; position:relative;">
+            <table>
+              <tbody>
+                <tr>
+                  <th> proof<sub>SS</sub>: </th>
+                  <td> ({{proof.proof_c}}, {{proof.proof_D}}, {{proof.proof_D1}}, {{proof.proof_D2}}) </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="footer has-text-centered">
+      <form method="post">
+        <button type="submit" class="button is-primary is-centered" name="proveS" value="back" style="margin-left: 50px; margin-right: 50px;"> Volver </button>
+      </form>
+    </div>
+
+  <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            }
+          });
+        }
+      </script>
+  </body>
+</html>
