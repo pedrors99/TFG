@@ -160,7 +160,6 @@ def verifySD():
 @app.route('/prove/proveS/<proveS>', methods=['POST', 'GET'])
 def proveS(proveS):
     if request.method == 'POST':
-        print("ASDASDASD", request.form['proveS'])
         if request.form['proveS'] == 'proof_ss':
             if proveS == 'proof_sa':
                 return redirect(url_for('proveSS', proveS=proveS, proveSS='proof_ssa'))

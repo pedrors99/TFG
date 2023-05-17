@@ -127,10 +127,10 @@ def proveWT_Flask(x, n, g, h, r, a, b, E, params, debug=False):
     proof_sa, ext_sa, ext_ssa = proveS_Flask(xa1, n, ra1, g, h, b, params)
     proof_sb, ext_sb, ext_ssb = proveS_Flask(xb1, n, rb1, g, h, b, params)
 
-    theta = math.floor(2 * math.sqrt(b-a))
+    # theta = math.floor(2 * math.sqrt(b-a))
 
-    proof_lia, ext_lia = proveLI_Flask(xa2, n, g, h, ra2, theta, params)
-    proof_lib, ext_lib = proveLI_Flask(xb2, n, g, h, rb2, theta, params)
+    proof_lia, ext_lia = proveLI_Flask(xa2, n, g, h, ra2, b, params)
+    proof_lib, ext_lib = proveLI_Flask(xb2, n, g, h, rb2, b, params)
 
     ext_wt = {'xa': xa, 'xb': xb, 'ra1': ra1, 'ra2': ra2, 'rb1': rb1, 'rb2': rb2, 'xa1': xa1, 'xa2': xa2, 'xb1': xb1,
               'xb2': xb2}
