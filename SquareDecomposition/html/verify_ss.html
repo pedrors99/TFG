@@ -57,7 +57,7 @@
     </script>
 
     <h1 class="title" style="font-size:3vw">
-      Square Decomposition - Square
+      Square Decomposition - Same Secret - Verificación
     </h1>
 
     <div class="block">
@@ -68,10 +68,6 @@
             <table>
               <tbody>
                 <tr>
-                  <th> x: </th>
-                  <td> {{ext.x}} </td>
-                </tr>
-                <tr>
                   <th> n: </th>
                   <td> {{inputs.n}} </td>
                 </tr>
@@ -81,29 +77,12 @@
             <table>
               <tbody>
                 <tr>
-                  <th> a: </th>
-                  <td> {{inputs.a}} </td>
+                  <th> E: </th>
+                  <td> {{val.E}} </td>
                 </tr>
                 <tr>
-                  <th> b: </th>
-                  <td> {{inputs.b}} </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <table>
-              <tbody>
-                <tr>
-                  <th> g: </th>
-                  <td> {{inputs.g}} </td>
-                </tr>
-                <tr>
-                  <th> h: </th>
-                  <td> {{inputs.h}} </td>
-                </tr>
-                <tr>
-                  <th> r1: </th>
-                  <td> {{ext.r1}} </td>
+                  <th> F: </th>
+                  <td> {{val.F}} </td>
                 </tr>
               </tbody>
             </table>
@@ -111,16 +90,38 @@
             <table>
               <tbody>
                 <tr>
-                  <th> t: </th>
-                  <td> {{params.t}} </td>
+                  <th> g1: </th>
+                  <td> {{val.g1}} </td>
                 </tr>
                 <tr>
-                  <th> l: </th>
-                  <td> {{params.l}} </td>
+                  <th> g2: </th>
+                  <td> {{val.g2}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> h1: </th>
+                  <td> {{val.h1}} </td>
                 </tr>
                 <tr>
-                  <th> s: </th>
-                  <td> {{params.s}} </td>
+                  <th> h2: </th>
+                  <td> {{val.h2}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br>
+
+          <div class="container" style="width:50%; position:relative;">
+            <table>
+              <tbody>
+                <tr>
+                  <th> proof<sub>SS</sub> = (c, D, D1, D2): </th>
+                  <td> ({{proof.c}}, {{proof.D}}, {{proof.D1}}, {{proof.D2}}) </td>
                 </tr>
               </tbody>
             </table>
@@ -131,62 +132,38 @@
       <div class="block">
         <button type="button" class="collapsible" style="width:75%"><b>Algoritmo</b></button>
         <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
-          <p>E = g<sup>x<sup>2</sup></sup> h<sup>r<sub>1</sub></sup> (mod n) = {{inputs.g}}<sup>{{ext.x * ext.x}}</sup> {{inputs.h}}<sup>{{ext.r1}}</sup> (mod {{inputs.n}}) = {{ext_s.E}}</p>
-          <p>r<sub>2</sub> &isin; <sub>R</sub> [-2<sup>s</sup>n-1, 2<sup>s</sup>n+1] &rarr; r<sub>2</sub> &isin; <sub>R</sub> [-2<sup>{{params.s}}</sup>·{{inputs.n}}-1, 2<sup>{{params.s}}</sup>·{{inputs.n}}+1] &rarr; r<sub>2</sub> &isin; [{{ext.int1}}, {{ext.int2}}] &rarr; r = {{ext_s.r2}}</p>
-          <p>F = g<sup>x</sup> h<sup>r<sub>2</sub></sup> (mod n) = {{inputs.g}}<sup>{{ext.x}}</sup> {{inputs.h}}<sup>{{ext_s.r2}}</sup> (mod {{inputs.n}}) = {{ext_s.F}}</p>
-          <p>r<sub>3</sub> = r<sub>1</sub> - r<sub>2</sub>x = {{ext.r1}} - {{ext_s.r2}} &middot; {{ext.x}} = {{ext_s.r3}}</p>
-          <br>
-          <p>proof<sub>SS</sub> = Prove<sub>SS</sub>(x, r<sub>2</sub>, r<sub>3</sub>, E, F) = ({{proof.proof_c}}, {{proof.proof_D}}, {{proof.proof_D1}}, {{proof.proof_D2}})</p>
+          <p>val1 = g<sub>1</sub><sup>D</sup> h<sub>1</sub><sup>D<sub>1</sub></sup> E<sup>-c</sup> (mod n) = {{val.g1}}<sup>{{proof.D}}</sup> {{val.h1}}<sup>{{proof.D1}}</sup> {{val.E}}<sup>{{-proof.c}}</sup> (mod {{n}}) = {{ext.val1}}</p>
+          <p>val1 = g<sub>2</sub><sup>D</sup> h<sub>2</sub><sup>D<sub>2</sub></sup> F<sup>-c</sup> (mod n) = {{val.g2}}<sup>{{proof.D}}</sup> {{val.h2}}<sup>{{proof.D2}}</sup> {{val.F}}<sup>{{-proof.c}}</sup> (mod {{n}}) = {{ext.val2}}</p>
+          <p><b>if</b> (c == Hash(val1 || val2)) = ({{proof.c}} = Hash({{ext.val1}} || {{ext.val2}})) = ({{proof.c}} = {{ext.val3}}) = {{ext.cond}}</p>
+          <p>    <b>return</b> True</p>
+          <p><b>else</b></p>
+          <p>    <b>return</b> False</p>
         </div>
       </div>
 
       <div class="block">
-        <button type="button" class="collapsible" style="width:75%"><b>Prueba Prove<sub>SS</sub></b></button>
+        <button type="button" class="collapsible" style="width:75%"><b>Resultado</b></button>
         <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
-          <br>
-          <form method="post">
-            <button type="submit" class="button is-dark is-centered" name="proveS" value="proof_ss"> proof<sub>SS</sub> </button>
-          </form>
-          <br>
-        </div>
-      </div>
-
-      <div class="block">
-        <button type="button" class="collapsible" style="width:75%"><b>Salida</b></button>
-        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
-          <div class="container" style="width:10%; position:relative;">
-            <table>
-              <tbody>
-                <tr>
-                  <th> E: </th>
-                  <td> {{proof.E}} </td>
-                </tr>
-                <tr>
-                  <th> F: </th>
-                  <td> {{proof.F}} </td>
-                </tr>
-              </tbody>
-            </table>
+          <div id="Result">
+            <p>{{result}}</p>
           </div>
 
-          <div class="container" style="width:30%; position:relative;">
-            <table>
-              <tbody>
-                <tr>
-                  <th> proof<sub>SS</sub>: </th>
-                  <td> ({{proof.proof_c}}, {{proof.proof_D}}, {{proof.proof_D1}}, {{proof.proof_D2}}) </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <script>
+          if ({{result}}) {
+            document.getElementById("Result").style.color  = "#009900";
+            document.getElementById("Result").textContent = "• Correcto •";
+          } else {
+            document.getElementById("Result").style.color = "#990000";
+            document.getElementById("Result").textContent = "• Incorrecto •";
+          }
+          </script>
         </div>
       </div>
     </div>
 
     <div class="footer has-text-centered">
       <form method="post">
-        <button type="submit" onclick="history.back()" class="button is-primary is-centered" name="proveS" value="back" style="margin-left: 50px; margin-right: 50px;"> Volver </button>
-        <button type="submit" class="button is-primary is-centered" name="proveS" value="verifyS" style="margin-left: 50px; margin-right: 50px;"> Verificar </button>
+        <button type="submit" onclick="history.back()" class="button is-primary is-centered" name="verifyS" value="back" style="margin-left: 50px; margin-right: 50px;"> Volver </button>
       </form>
     </div>
 

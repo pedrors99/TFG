@@ -57,7 +57,7 @@
     </script>
 
     <h1 class="title" style="font-size:3vw">
-      Square Decomposition: Square
+      Square Decomposition - Same Secret
     </h1>
 
     <div class="block">
@@ -200,9 +200,12 @@
 
     <div class="footer has-text-centered">
       <form method="post">
-        <button type="submit" class="button is-primary is-centered" name="proveSS" value="back" style="margin-left: 50px; margin-right: 50px;"> Volver </button>
+        <button type="submit" onclick="history.back()" class="button is-primary is-centered" name="proveSS" value="back" style="margin-left: 50px; margin-right: 50px;"> Volver </button>
+        <button type="submit" class="button is-primary is-centered" name="proveSS" value="verifySS" style="margin-left: 50px; margin-right: 50px;"> Verificar </button>
       </form>
     </div>
+
+    <br><br>
 
   <script>
         var coll = document.getElementsByClassName("collapsible");

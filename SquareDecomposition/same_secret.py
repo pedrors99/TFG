@@ -41,16 +41,16 @@ def proveSS(x, n, r1, r2, g1, g2, h1, h2, b, params, debug=False):
 
 
 def verifySS(E, F, n, g1, g2, h1, h2, proof, debug=False):
-    cond1 = Mod(g1, n) ** proof.D * Mod(h1, n) ** proof.D1 * Mod(E, n) ** (-proof.c)
-    cond2 = Mod(g2, n) ** proof.D * Mod(h2, n) ** proof.D2 * Mod(F, n) ** (-proof.c)
+    val1 = Mod(g1, n) ** proof.D * Mod(h1, n) ** proof.D1 * Mod(E, n) ** (-proof.c)
+    val2 = Mod(g2, n) ** proof.D * Mod(h2, n) ** proof.D2 * Mod(F, n) ** (-proof.c)
 
     if debug:
         print("\t ---Verify Same Secret: Debug--- \t")
         print("E: {}, F: {}, n: {}, g1: {}, g2: {}, h1: {}, h2: {}, proof.c: {}, proof.D: {}, proof.D1: {}, proof.D2: {}".format(E, F, n, g1, g2, h1, h2, proof.c, proof.D, proof.D1, proof.D2))
-        print("Cond1: {}, {} * {} * {}".format(cond1, (Mod(g1, n) ** proof.D).x, (Mod(h1, n) ** proof.D1).x, (Mod(E, n) ** (-proof.c)).x))
-        print("Cond2: {}, {} * {} * {}\n".format(cond2, (Mod(g2, n) ** proof.D).x, (Mod(h2, n) ** proof.D2).x, (Mod(F, n) ** (-proof.c)).x))
+        print("Cond1: {}, {} * {} * {}".format(val1, (Mod(g1, n) ** proof.D).x, (Mod(h1, n) ** proof.D1).x, (Mod(E, n) ** (-proof.c)).x))
+        print("Cond2: {}, {} * {} * {}\n".format(val2, (Mod(g2, n) ** proof.D).x, (Mod(h2, n) ** proof.D2).x, (Mod(F, n) ** (-proof.c)).x))
 
-    return hash(utils.concat(cond1.x, cond2.x)) == proof.c
+    return hash(utils.concat(val1.x, val2.x)) == proof.c
 
 
 def proveSS_Flask(x, n, r1, r2, g1, g2, h1, h2, b, params, debug=False):
@@ -78,3 +78,22 @@ def proveSS_Flask(x, n, r1, r2, g1, g2, h1, h2, b, params, debug=False):
         print("w: {}, eta1: {}, eta2: {}, omega1: {}, omega2: {}, c: {}, D: {}, D1: {}, D2: {}\n".format(w, eta1, eta2, omega1, omega2, c, D, D1, D2))
 
     return proofSS(c, D, D1, D2), ext_ss
+
+
+def verifySS_Flask(E, F, n, g1, g2, h1, h2, proof, debug=False):
+    """
+    Mismo funcionamiento que verifySS, pero devolviendo parámetros extra para visualización.
+    """
+    val1 = Mod(g1, n) ** proof.D * Mod(h1, n) ** proof.D1 * Mod(E, n) ** (-proof.c)
+    val2 = Mod(g2, n) ** proof.D * Mod(h2, n) ** proof.D2 * Mod(F, n) ** (-proof.c)
+
+    ext = {'val1': int(val1.x), 'val2': int(val2.x), 'val3': int(hash(utils.concat(val1.x, val2.x))),
+           'cond': hash(utils.concat(val1.x, val2.x)) == proof.c}
+
+    if debug:
+        print("\t ---Verify Same Secret: Debug--- \t")
+        print("E: {}, F: {}, n: {}, g1: {}, g2: {}, h1: {}, h2: {}, proof.c: {}, proof.D: {}, proof.D1: {}, proof.D2: {}".format(E, F, n, g1, g2, h1, h2, proof.c, proof.D, proof.D1, proof.D2))
+        print("Cond1: {}, {} * {} * {}".format(val1, (Mod(g1, n) ** proof.D).x, (Mod(h1, n) ** proof.D1).x, (Mod(E, n) ** (-proof.c)).x))
+        print("Cond2: {}, {} * {} * {}\n".format(val2, (Mod(g2, n) ** proof.D).x, (Mod(h2, n) ** proof.D2).x, (Mod(F, n) ** (-proof.c)).x))
+
+    return (hash(utils.concat(val1.x, val2.x)) == proof.c), ext

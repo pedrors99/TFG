@@ -2,7 +2,10 @@ from flask import Flask, redirect, url_for, request, render_template, session
 import random
 
 from mod import Mod
-from with_tolerance import paramsWT, proveWT_Flask
+from with_tolerance import paramsWT, proveWT_Flask, proofWT, verifyWT_Flask
+from square import paramsS, proofS, verifyS_Flask
+from same_secret import paramsSS, proofSS, verifySS_Flask
+from interval import paramsLI, proofLI, verifyLI_Flask
 
 app = Flask(__name__, template_folder='html')
 
@@ -28,6 +31,7 @@ def input():
 
         int1 = -2 ** s * n + 1
         int2 = 2 ** s * n - 1
+
         r = {'r': random.randint(int1, int2), 'int1': int1, 'int2': int2}
         session['r'] = r
 
@@ -64,13 +68,13 @@ def input():
         session['proof_lib'] = proof_lib
         session['ext_lib'] = ext_lib
 
-        return redirect(url_for('sd'))
+        return redirect(url_for('proveSD'))
     else:
         return render_template('input.html')
 
 
 @app.route('/prove', methods=['POST', 'GET'])
-def sd():
+def proveSD():
     debug = False
 
     if request.method == 'POST':
@@ -78,12 +82,14 @@ def sd():
             return redirect(url_for('proveS', proveS='proof_sa'))
         elif request.form['prove'] == 'proof_sb':
             return redirect(url_for('proveS', proveS='proof_sb'))
+
         elif request.form['prove'] == 'proof_lia':
-            return redirect(url_for('proveLI', proveS='proof_lia'))
+            return redirect(url_for('proveLI', proveLI='proof_lia'))
         elif request.form['prove'] == 'proof_lib':
-            return redirect(url_for('proveLI', proveS='proof_lib'))
-        elif request.form['prove'] == 'back':
-            return redirect(url_for('input'))
+            return redirect(url_for('proveLI', proveLI='proof_lib'))
+
+        elif request.form['prove'] == 'verifier':
+            return redirect(url_for('verifySD'))
     else:
         inputs = session['inputs']
         params = session['params']
@@ -109,16 +115,63 @@ def sd():
                                proof_sa=proof_sa, proof_sb=proof_sb, proof_lia=proof_lia, proof_lib=proof_lib)
 
 
-@app.route('/prove/<proveS>', methods=['POST', 'GET'])
+@app.route('/verify', methods=['POST', 'GET'])
+def verifySD():
+    if request.method == 'POST':
+        if request.form['verify'] == 'verify_lia':
+            return redirect(url_for('verifyLI', verifyLI='verify_lia'))
+        elif request.form['verify'] == 'verify_lib':
+            return redirect(url_for('verifyLI', verifyLI='verify_lib'))
+        elif request.form['verify'] == 'verify_sa':
+            return redirect(url_for('verifyS', verifyS='verify_sa'))
+        elif request.form['verify'] == 'verify_sb':
+            return redirect(url_for('verifyS', verifyS='verify_sb'))
+    else:
+        inputs = session['inputs']
+        params = session['params']
+
+        proof_wt = session['proof_wt']
+        proof_sa = session['proof_sa']
+        proof_sb = session['proof_sb']
+        proof_lia = session['proof_lia']
+        proof_lib = session['proof_lib']
+
+        params_ = paramsWT(params['t'], params['l'], params['s'])
+
+        proof_ssa_ = proofSS(proof_sa['proof_c'], proof_sa['proof_D'], proof_sa['proof_D1'], proof_sa['proof_D2'])
+        proof_sa_ = proofS(proof_sa['E'], proof_sa['F'], proof_ssa_)
+
+        proof_ssb_ = proofSS(proof_sb['proof_c'], proof_sb['proof_D'], proof_sb['proof_D1'], proof_sb['proof_D2'])
+        proof_sb_ = proofS(proof_sb['E'], proof_sb['F'], proof_ssb_)
+
+        proof_lia_ = proofLI(proof_lia['C'], proof_lia['D1'], proof_lia['D2'], proof_lia['c'])
+
+        proof_lib_ = proofLI(proof_lib['C'], proof_lib['D1'], proof_lib['D2'], proof_lib['c'])
+
+        proof = proofWT(proof_wt['Ea'], proof_wt['Eb'], proof_wt['Ea1'], proof_wt['Ea2'], proof_wt['Eb1'],
+                        proof_wt['Eb2'], proof_sa_, proof_sb_, proof_lia_, proof_lib_)
+
+        result, ext = verifyWT_Flask(inputs['n'], inputs['g'], inputs['h'], inputs['b'], proof, params_)
+
+        return render_template('verify_sd.html', inputs=inputs, params=params, proof_wt=proof_wt, proof_sa=proof_sa,
+                               proof_sb=proof_sb, proof_lia=proof_lia, proof_lib=proof_lib, result=int(result), ext=ext)
+
+
+@app.route('/prove/proveS/<proveS>', methods=['POST', 'GET'])
 def proveS(proveS):
     if request.method == 'POST':
+        print("ASDASDASD", request.form['proveS'])
         if request.form['proveS'] == 'proof_ss':
             if proveS == 'proof_sa':
                 return redirect(url_for('proveSS', proveS=proveS, proveSS='proof_ssa'))
             elif proveS == 'proof_sb':
                 return redirect(url_for('proveSS', proveS=proveS, proveSS='proof_ssb'))
-        elif request.form['proveS'] == 'back':
-            return redirect(url_for('sd'))
+
+        elif request.form['proveS'] == 'verifyS':
+            if proveS == 'proof_sa':
+                return redirect(url_for('verifyS', verifyS='verify_sa'))
+            elif proveS == 'proof_sb':
+                return redirect(url_for('verifyS', verifyS='verify_sb'))
     else:
         inputs = session['inputs']
         ext_wt = session['ext_wt']
@@ -139,11 +192,38 @@ def proveS(proveS):
         return render_template('prove_s.html', proof=proof, ext_s=ext_s, inputs=inputs, params=params, ext=ext)
 
 
-@app.route('/prove/<proveS>/<proveSS>', methods=['POST', 'GET'])
+@app.route('/verify/verifyS/<verifyS>',  methods=['POST', 'GET'])
+def verifyS(verifyS):
+    if request.method == 'POST':
+        if request.form['verifyS'] == 'verify_ss':
+            if verifyS == 'verify_sa':
+                return redirect(url_for('verifySS', verifyS=verifyS, verifySS='verify_ssa'))
+            elif verifyS == 'verify_sb':
+                return redirect(url_for('verifySS', verifyS=verifyS, verifySS='verify_ssb'))
+    else:
+        inputs = session['inputs']
+
+        if verifyS == 'verify_sa':
+            proof = session['proof_sa']
+        elif verifyS == 'verify_sb':
+            proof = session['proof_sb']
+
+        proof_ss = proofSS(proof['proof_c'], proof['proof_D'], proof['proof_D1'], proof['proof_D2'])
+        proof_ = proofS(proof['E'], proof['F'], proof_ss)
+
+        result = verifyS_Flask(inputs['n'], inputs['g'], inputs['h'], proof_)
+
+        return render_template('verify_s.html', inputs=inputs, proof=proof, result=int(result), res=result)
+
+
+@app.route('/prove/proveS/<proveS>/proveSS/<proveSS>', methods=['POST', 'GET'])
 def proveSS(proveS, proveSS):
     if request.method == 'POST':
-        if request.form['proveSS'] == 'back':
-            return redirect(url_for('proveS', proveS=proveS))
+        if request.form['proveSS'] == 'verifySS':
+            if proveS == 'proof_sa':
+                return redirect(url_for('verifySS', verifyS='verify_sa', verifySS='verify_ssa'))
+            elif proveS == 'proof_sb':
+                return redirect(url_for('verifySS', verifyS='verify_sb', verifySS='verify_ssb'))
     else:
         inputs = session['inputs']
         ext_wt = session['ext_wt']
@@ -168,9 +248,73 @@ def proveSS(proveS, proveSS):
         return render_template('prove_ss.html', inputs=inputs, params=params, proof=proof, ext=ext, proof_s=proof_s)
 
 
-@app.route('/prove/<prove>', methods=['GET'])
-def proveLI(prove):
-    return prove
+@app.route('/verify/verifyS/<verifyS>/verifySS/<verifySS>',  methods=['GET'])
+def verifySS(verifyS, verifySS):
+    inputs = session['inputs']
+
+    if verifySS == 'verify_ssa':
+        proof_s = session['proof_sa']
+    elif verifySS == 'verify_ssb':
+        proof_s = session['proof_sb']
+
+    E = proof_s['E']
+    F = proof_s['F']
+    proof = proofSS(proof_s['proof_c'], proof_s['proof_D'], proof_s['proof_D1'], proof_s['proof_D2'])
+
+    val = {'E': E, 'F': F, 'g1': F, 'g2': inputs['g'], 'h1': inputs['h'], 'h2': inputs['h']}
+    result, ext = verifySS_Flask(E, F, inputs['n'], F, inputs['g'], inputs['h'], inputs['h'], proof)
+
+    return render_template('verify_ss.html', inputs=inputs, proof=proof, val=val, ext=ext, result=int(result))
+
+
+
+@app.route('/prove/proveLI/<proveLI>', methods=['POST', 'GET'])
+def proveLI(proveLI):
+    if request.method == 'POST':
+        if request.form['proveLI'] == 'verify':
+            if proveLI == 'proof_lia':
+                return redirect(url_for('verifyLI', verifyLI="verify_lia"))
+            elif proveLI == 'proof_lib':
+                return redirect(url_for('verifyLI', verifyLI="verify_lib"))
+    else:
+        inputs = session['inputs']
+        ext_wt = session['ext_wt']
+        params = session['params']
+
+        if proveLI == 'proof_lia':
+            proof = session['proof_lia']
+            ext_li = session['ext_lia']
+            ext = {'x': ext_wt['xa2'], 'r': ext_wt['ra2']}
+        elif proveLI == 'proof_lib':
+            proof = session['proof_lib']
+            ext_li = session['ext_lib']
+            ext = {'x': ext_wt['xb2'], 'r': ext_wt['rb2']}
+        else:
+            assert True, 'Prueba no encontrada'
+
+        return render_template('prove_li.html', proof=proof, ext_li=ext_li, inputs=inputs, params=params, ext=ext)
+
+
+@app.route('/verify/verifyLI/<verifyLI>', methods=['GET'])
+def verifyLI(verifyLI):
+    inputs = session['inputs']
+    params = session['params']
+    proof_wt = session['proof_wt']
+
+    params_ = paramsLI(params['t'], params['l'], params['s'])
+
+    if verifyLI == 'verify_lia':
+        proof = session['proof_lia']
+        proof_ = proofLI(proof['C'], proof['D1'], proof['D2'], proof['c'])
+        E = proof_wt['Ea2']
+    elif verifyLI == 'verify_lib':
+        proof = session['proof_lib']
+        proof_ = proofLI(proof['C'], proof['D1'], proof['D2'], proof['c'])
+        E = proof_wt['Eb2']
+
+    result, ext = verifyLI_Flask(E, inputs['n'], inputs['g'], inputs['h'], inputs['b'], proof_, params_)
+
+    return render_template('verify_li.html', inputs=inputs, params=params, proof=proof, ext=ext, result=int(result))
 
 
 if __name__ == '__main__':

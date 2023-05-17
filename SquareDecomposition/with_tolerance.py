@@ -86,7 +86,7 @@ def verifyWT(n, g, h, b, proof, params, debug=False):
 
     if proof.Ea2 == (Mod(proof.Ea, n) * Mod(proof.Ea1, n).inverse()).x and proof.Eb2 == (Mod(proof.Eb, n) * Mod(proof.Eb1, n).inverse()).x:
         bs = verifyS(n, g, h, proof.proof_sa, debug) and verifyS(n, g, h, proof.proof_sb, debug)
-        bli = verifyLI(proof.Ea2, n, g, h, b, proof.proof_lia, params) and verifyLI(proof.Eb2, n, g, h, b, proof.proof_lib, params)
+        bli = verifyLI(proof.Ea2, n, g, h, b, proof.proof_lia, params, debug) and verifyLI(proof.Eb2, n, g, h, b, proof.proof_lib, params, debug)
         return bs and bli
     else:
         return False
@@ -147,3 +147,34 @@ def proveWT_Flask(x, n, g, h, r, a, b, E, params, debug=False):
 
     return proofWT(Ea, Eb, Ea1, Ea2, Eb1, Eb2, proof_sa, proof_sb, proof_lia, proof_lib), ext_wt, ext_sa, ext_ssa,\
         ext_sb, ext_ssb, ext_lia, ext_lib
+
+
+def verifyWT_Flask(n, g, h, b, proof, params, debug=False):
+    """
+    Mismo funcionamiento que verifyWT, pero devolviendo parámetros extra para visualización.
+    """
+    if debug:
+        print("\t ---Verify with tolerance: Debug--- \t")
+        print("Ea2: {}, Ea: {}, Ea1: {}, {} == {}".format(proof.Ea2, proof.Ea, proof.Ea1, proof.Ea2, (Mod(proof.Ea, n) * Mod(proof.Ea1, n).inverse()).x))
+        print("Eb2: {}, Eb: {}, Eb1: {}, {} == {}".format(proof.Eb2, proof.Eb, proof.Eb1, proof.Eb2, (Mod(proof.Eb, n) * Mod(proof.Eb1, n).inverse()).x))
+        print("bs: {} and {}".format(verifyS(n, g, h, proof.proof_sa), verifyS(n, g, h, proof.proof_sb)))
+        print("bli: {} and {}\n".format(verifyLI(proof.Ea2, n, g, h, b, proof.proof_lia, params), verifyLI(proof.Eb2, n, g, h, b, proof.proof_lib, params)))
+
+    cond1 = proof.Ea2 == (Mod(proof.Ea, n) * Mod(proof.Ea1, n).inverse()).x
+    cond2 = proof.Eb2 == (Mod(proof.Eb, n) * Mod(proof.Eb1, n).inverse()).x
+
+    if cond1 and cond2:
+        cond3 = verifyS(n, g, h, proof.proof_sa, debug)
+        cond4 = verifyS(n, g, h, proof.proof_sb, debug)
+
+        cond5 = verifyLI(proof.Ea2, n, g, h, b, proof.proof_lia, params, debug)
+        cond6 = verifyLI(proof.Eb2, n, g, h, b, proof.proof_lib, params, debug)
+
+        bs = cond3 and cond4
+        bli = cond5 and cond6
+
+        ext = {'cond1': cond1, 'cond2': cond2, 'cond3': cond3, 'cond4': cond4, 'cond5': cond5, 'cond6': cond6}
+
+        return (bs and bli), ext
+    else:
+        return False

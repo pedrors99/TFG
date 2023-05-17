@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Square Decomposition</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+      .footer {
+        width: 100%;
+        padding: 10px 0;
+        position: fixed;
+        background-color: rgba(220, 220, 220, 0.8);
+        border-style: solid hidden hidden hidden;
+        bottom: 0;
+        left: 0
+      }
+
+      .collapsible {
+        background-color: #3E8ED0;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 15px;
+        border-radius: 5px 5px 0px 0px;
+      }
+
+      .collapsible:after {
+        content: '\002B';
+        color: white;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+      }
+
+      .active:after {
+        content: "\2212";
+      }
+
+      .content {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+      }
+    </style>
+  </head>
+
+  <body class="has-text-centered">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <h1 class="title" style="font-size:3vw">
+      Square Decomposition - Verificación
+    </h1>
+
+    <div class="block">
+      <div class="block">
+        <button type="button" class="collapsible" style="width:75%"><b>Entrada</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <div class="container" style="width:10%; position:relative;">
+            <table>
+              <tbody>
+                <tr>
+                  <th> n: </th>
+                  <td> {{inputs.n}} </td>
+                </tr>
+                <tr>
+                  <th> b: </th>
+                  <td> {{inputs.b}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> g: </th>
+                  <td> {{inputs.g}} </td>
+                </tr>
+                <tr>
+                  <th> h: </th>
+                  <td> {{inputs.h}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> E<sub>a</sub>: </th>
+                  <td> {{proof_wt.Ea}} </td>
+                </tr>
+                <tr>
+                  <th> E<sub>a<sub>1</sub></sub>: </th>
+                  <td> {{proof_wt.Ea1}} </td>
+                </tr>
+                <tr>
+                  <th> E<sub>a<sub>2</sub></sub>: </th>
+                  <td> {{proof_wt.Ea2}} </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table>
+              <tbody>
+                <tr>
+                  <th> E<sub>b</sub>: </th>
+                  <td> {{proof_wt.Eb}} </td>
+                </tr>
+                <tr>
+                  <th> E<sub>b<sub>1</sub></sub>: </th>
+                  <td> {{proof_wt.Eb1}} </td>
+                </tr>
+                <tr>
+                  <th> E<sub>b<sub>2</sub></sub>: </th>
+                  <td> {{proof_wt.Eb2}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br>
+
+          <div class="container" style="width:50%; position:relative;">
+            <table>
+              <tbody>
+                <tr>
+                  <th> proof<sub>S<sub>a</sub></sub> = (E, F, (c, D, D1, D2)): </th>
+                  <td> ({{proof_sa.E}}, {{proof_sa.F}}, ({{proof_sa.proof_c}}, {{proof_sa.proof_D}}, {{proof_sa.proof_D1}}, {{proof_sa.proof_D2}})) </td>
+                </tr>
+                <tr>
+                  <th> proof<sub>S<sub>b</sub></sub> = (E, F, (c, D, D1, D2)): </th>
+                  <td> ({{proof_sb.E}}, {{proof_sb.F}}, ({{proof_sb.proof_c}}, {{proof_sb.proof_D}}, {{proof_sb.proof_D1}}, {{proof_sb.proof_D2}})) </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br>
+
+          <div class="container" style="width:30%; position:relative;">
+            <table>
+              <tbody>
+                <tr>
+                  <th> proof<sub>LI<sub>a</sub></sub> = (c, D1, D2, C): </th>
+                  <td> ({{proof_lia.C}}, {{proof_lia.D1}}, {{proof_lia.D2}}, {{proof_lia.c}}) </td>
+                </tr>
+                <tr>
+                  <th> proof<sub>LI<sub>b</sub></sub> = (c, D1, D2, C): </th>
+                  <td> ({{proof_lib.C}}, {{proof_lib.D1}}, {{proof_lib.D2}}, {{proof_lib.c}}) </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br>
+
+          <div class="container" style="width:10%; position:relative;">
+            <table>
+              <tbody>
+                <tr>
+                  <th> t: </th>
+                  <td> {{params.t}} </td>
+                </tr>
+                <tr>
+                  <th> l: </th>
+                  <td> {{params.l}} </td>
+                </tr>
+                <tr>
+                  <th> s: </th>
+                  <td> {{params.s}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <button type="button" class="collapsible" style="width:75%"><b>Algoritmo</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <p>cond<sub>1</sub> = (E<sub>a<sub>2</sub></sub> == E<sub>a</sub>/E<sub>a<sub>1</sub></sub>) = ({{proof_wt.Ea2}} == {{proof_wt.Ea}}/{{proof_wt.Ea1}}) = {{ext.cond1}}</p>
+          <p>cond<sub>2</sub> = (E<sub>b<sub>2</sub></sub> == E<sub>b</sub>/E<sub>b<sub>1</sub></sub>) = ({{proof_wt.Eb2}} == {{proof_wt.Eb}}/{{proof_wt.Eb1}}) = {{ext.cond2}}</p>
+          <br>
+          <p><b>If</b> (cond<sub>1</sub> and cond<sub>2</sub>) = ({{ext.cond1}} and {{ext.cond2}}):</p>
+          <p>    cond<sub>3</sub> = Verify<sub>S</sub>(proof<sub>S<sub>a</sub></sub>) = {{ext.cond3}}</p>
+          <p>    cond<sub>4</sub> = Verify<sub>S</sub>(proof<sub>S<sub>b</sub></sub>) = {{ext.cond4}}</p>
+          <p>    cond<sub>5</sub> = Verify<sub>LI</sub>(proof<sub>LI<sub>a</sub></sub>) = {{ext.cond5}}</p>
+          <p>    cond<sub>6</sub> = Verify<sub>LI</sub>(proof<sub>LI<sub>b</sub></sub>) = {{ext.cond6}}</p>
+          <p>    <b>return</b> (cond<sub>3</sub> and cond<sub>4</sub> and cond<sub>5</sub> and cond<sub>6</sub>) = ({{ext.cond3}} and {{ext.cond4}} and {{ext.cond5}} and {{ext.cond6}})</p>
+          <p><b>else:</b></p>
+          <p>    <b>return</b> False</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <button type="button" class="collapsible" style="width:75%"><b>Resultado</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <div id="Result">
+            <p>{{result}}</p>
+          </div>
+
+          <script>
+          if ({{result}}) {
+            document.getElementById("Result").style.color  = "#009900";
+            document.getElementById("Result").textContent = "• Correcto •";
+          } else {
+            document.getElementById("Result").style.color = "#990000";
+            document.getElementById("Result").textContent = "• Incorrecto •";
+          }
+          </script>
+        </div>
+      </div>
+
+      <div class="block">
+        <button type="button" class="collapsible" style="width:75%"><b>Pruebas</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <br>
+          <form method="post">
+            <button type="submit" class="button is-dark is-centered" name="verify" value="verify_sa" style="margin-left: 50px; margin-right: 50px;"> verify<sub>S<sub>a</sub></sub> </button>
+            <button type="submit" class="button is-dark is-centered" name="verify" value="verify_sb" style="margin-left: 50px; margin-right: 50px;"> verify<sub>S<sub>b</sub></sub> </button>
+            <button type="submit" class="button is-dark is-centered" name="verify" value="verify_lia" style="margin-left: 50px; margin-right: 50px;"> verify<sub>LI<sub>a</sub></sub> </button>
+            <button type="submit" class="button is-dark is-centered" name="verify" value="verify_lib" style="margin-left: 50px; margin-right: 50px;"> verify<sub>LI<sub>b</sub></sub> </button>
+          </form>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer has-text-centered">
+      <form method="post">
+        <button type="submit" onclick="history.back()" class="button is-primary is-centered" name="verify" value="back" style="margin-left: 50px; margin-right: 50px;"> Volver </button>
+      </form>
+    </div>
+
+    <br><br>
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            }
+          });
+        }
+      </script>
+  </body>
+</html>

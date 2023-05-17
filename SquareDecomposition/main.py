@@ -56,14 +56,12 @@ if __name__ == '__main__':
     params_wt = paramsWT(t, l, s1)
     proof_wt = proveWT(x, n, g1, h1, r1, a, b, E, params_wt)
     print("Verifying with tolerance...")
-    tolerance = verifyWT(n, g1, h1, b, proof_wt, params_wt, False)
+    tolerance = verifyWT(n, g1, h1, b, proof_wt, params_wt)
     print("Interval:", tolerance, "\n")
 
-    """
     print("Checking Square Decomposition...")
     params_sd = paramsSD(t, l, s1)
     proof_sd = proveSD(x, n, g1, h1, r1, a, b, E, params_sd)
     print("Verifying Square Decomposition...")
-    square_decomposition = verifySD(n, g1, h1, a, b, E, proof_sd, params_sd, False)
+    square_decomposition = verifySD(n, g1, h1, a, b, E, proof_sd, params_sd, True)
     print("Square Decomposition:", square_decomposition, "\n")
-"""

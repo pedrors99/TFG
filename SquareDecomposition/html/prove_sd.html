@@ -57,7 +57,7 @@
     </script>
 
     <h1 class="title" style="font-size:3vw">
-      Square Decomposition: Probador
+      Square Decomposition - Probador
     </h1>
 
     <div class="block">
@@ -208,7 +208,7 @@
             <button type="submit" class="button is-dark is-centered" name="prove" value="proof_lib" style="margin-left: 50px; margin-right: 50px;"> proof<sub>LI<sub>b</sub></sub> </button>
           </form>
           <br>
-      </div>
+        </div>
       </div>
 
       <div class="block">
@@ -218,14 +218,9 @@
             <table>
               <tbody>
                 <tr>
-                  <th> E: </th>
-                  <td> {{proof_wt.E}} </td>
+                  <th> E<sub>a</sub>: </th>
+                  <td> {{proof_wt.Ea}} </td>
                 </tr>
-              </tbody>
-            </table>
-
-            <table>
-              <tbody>
                 <tr>
                   <th> E<sub>a<sub>1</sub></sub>: </th>
                   <td> {{proof_wt.Ea1}} </td>
@@ -239,6 +234,10 @@
 
             <table>
               <tbody>
+                <tr>
+                  <th> E<sub>b</sub>: </th>
+                  <td> {{proof_wt.Eb}} </td>
+                </tr>
                 <tr>
                   <th> E<sub>b<sub>1</sub></sub>: </th>
                   <td> {{proof_wt.Eb1}} </td>
@@ -284,17 +283,18 @@
               </tbody>
             </table>
           </div>
-
         </div>
       </div>
-
-      <div class="footer has-text-centered">
-        <form method="post">
-          <button type="submit" class="button is-primary is-centered" name="prove" value="back" style="margin-left: 50px; margin-right: 50px;"> Volver </button>
-          <button type="submit" class="button is-primary is-centered" name="prove" value="verifier" style="margin-left: 50px; margin-right: 50px;"> Verificador </button>
-        </form>
-      </div>
     </div>
+
+    <div class="footer has-text-centered">
+      <form method="post">
+        <button type="submit" onclick="history.back()" class="button is-primary is-centered" name="prove" value="back" style="margin-left: 50px; margin-right: 50px;"> Volver </button>
+        <button type="submit" class="button is-primary is-centered" name="prove" value="verifier" style="margin-left: 50px; margin-right: 50px;"> Verificar </button>
+      </form>
+    </div>
+
+    <br><br>
 
     <script>
         var coll = document.getElementsByClassName("collapsible");
