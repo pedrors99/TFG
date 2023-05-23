@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
     print("Checking square...")
     params_s = paramsS(t, l, s1)
-    proof_s = proveS(x, n, r1, g1, h1, b, params_s)
+    proof_s = proveS(x, n, E, r1, g1, h1, b, params_s)
     print("Verifying square...")
     square = verifyS(n, g1, h1, proof_s)
     print("Square:", square, "\n")
@@ -58,10 +58,10 @@ if __name__ == '__main__':
     print("Verifying with tolerance...")
     tolerance = verifyWT(n, g1, h1, b, proof_wt, params_wt)
     print("Interval:", tolerance, "\n")
-
+"""
     print("Checking Square Decomposition...")
     params_sd = paramsSD(t, l, s1)
     proof_sd = proveSD(x, n, g1, h1, r1, a, b, E, params_sd)
     print("Verifying Square Decomposition...")
     square_decomposition = verifySD(n, g1, h1, a, b, E, proof_sd, params_sd, True)
-    print("Square Decomposition:", square_decomposition, "\n")
+    print("Square Decomposition:", square_decomposition, "\n")"""

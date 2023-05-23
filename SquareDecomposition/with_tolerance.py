@@ -57,8 +57,8 @@ def proveWT(x, n, g, h, r, a, b, E, params, debug=False):
     Eb1 = (Mod(g, n) ** (xb1 ** 2) * Mod(h, n) ** rb1).x
     Eb2 = (Mod(g, n) ** xb2 * Mod(h, n) ** rb2).x
 
-    proof_sa = proveS(xa1, n, ra1, g, h, b, params)
-    proof_sb = proveS(xb1, n, rb1, g, h, b, params)
+    proof_sa = proveS(xa1, n, Ea1, ra1, g, h, b, params)
+    proof_sb = proveS(xb1, n, Eb1, rb1, g, h, b, params)
 
     proof_lia = proveLI(xa2, n, g, h, ra2, b, params)
     proof_lib = proveLI(xb2, n, g, h, rb2, b, params)
@@ -124,8 +124,8 @@ def proveWT_Flask(x, n, g, h, r, a, b, E, params, debug=False):
     Eb1 = (Mod(g, n) ** (xb1 ** 2) * Mod(h, n) ** rb1).x
     Eb2 = (Mod(g, n) ** xb2 * Mod(h, n) ** rb2).x
 
-    proof_sa, ext_sa, ext_ssa = proveS_Flask(xa1, n, ra1, g, h, b, params)
-    proof_sb, ext_sb, ext_ssb = proveS_Flask(xb1, n, rb1, g, h, b, params)
+    proof_sa, ext_sa, ext_ssa = proveS_Flask(xa1, n, Ea1, ra1, g, h, b, params)
+    proof_sb, ext_sb, ext_ssb = proveS_Flask(xb1, n, Eb1, rb1, g, h, b, params)
 
     # theta = math.floor(2 * math.sqrt(b-a))
 
@@ -160,8 +160,8 @@ def verifyWT_Flask(n, g, h, b, proof, params, debug=False):
         print("bs: {} and {}".format(verifyS(n, g, h, proof.proof_sa), verifyS(n, g, h, proof.proof_sb)))
         print("bli: {} and {}\n".format(verifyLI(proof.Ea2, n, g, h, b, proof.proof_lia, params), verifyLI(proof.Eb2, n, g, h, b, proof.proof_lib, params)))
 
-    cond1 = proof.Ea2 == (Mod(proof.Ea, n) * Mod(proof.Ea1, n).inverse()).x
-    cond2 = proof.Eb2 == (Mod(proof.Eb, n) * Mod(proof.Eb1, n).inverse()).x
+    cond1 = (proof.Ea2 == (Mod(proof.Ea, n) * Mod(proof.Ea1, n).inverse()).x)
+    cond2 = (proof.Eb2 == (Mod(proof.Eb, n) * Mod(proof.Eb1, n).inverse()).x)
 
     if cond1 and cond2:
         cond3 = verifyS(n, g, h, proof.proof_sa, debug)
@@ -177,4 +177,6 @@ def verifyWT_Flask(n, g, h, b, proof, params, debug=False):
 
         return (bs and bli), ext
     else:
-        return False
+        ext = {'cond1': cond1, 'cond2': cond2, 'cond3': '?', 'cond4': '?', 'cond5': '?', 'cond6': '?'}
+
+        return False, ext

@@ -55,6 +55,18 @@
       Square Decomposition
     </h1>
 
+    <script>
+      if ({{alert}} > 0) {
+        if ({{alert}} == 1) {
+          alert("a tiene que ser menor que b.");
+        } else if ({{alert}} == 2) {
+          alert("a tiene que ser menor que x.");
+        } else if ({{alert}} == 3) {
+          alert("b tiene que ser mayor que x.");
+        }
+      }
+    </script>
+
     <form action="http://localhost:5000/" method="post">
       <div class="block">
         <div class="block">
@@ -63,31 +75,23 @@
 
             <br>
 
-            <div class="field is-horizontal has-text-centered m-auto">
-              <div class="field-label is-normal">
+            <div class="field is-horizontal has-text-centered m-auto" style="width:25%">
+              <div class="field-label has-text-centered m-auto">
                 <label class="label">x (Secreto)</label>
               </div>
               <div class="field-body">
-                <div class="field">
-                  <p class="control">
-                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="x" maxlength="64" value="13">
-                  </p>
-                </div>
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="x" maxlength="64" value="13">
               </div>
             </div>
 
             <br>
 
-            <div class="field is-horizontal has-text-centered m-auto">
-              <div class="field-label is-normal">
+            <div class="field is-horizontal has-text-centered m-auto" style="width:25%">
+              <div class="field-label has-text-centered m-auto">
                 <label class="label">n (Módulo)</label>
               </div>
               <div class="field-body">
-                <div class="field">
-                  <p class="control">
-                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="n" maxlength="64" value="221">
-                  </p>
-                </div>
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="n" maxlength="64" value="221">
               </div>
             </div>
 
@@ -102,31 +106,23 @@
 
             <br>
 
-            <div class="field is-horizontal has-text-centered m-auto">
-              <div class="field-label is-normal">
+            <div class="field is-horizontal has-text-centered m-auto" style="width:25%">
+              <div class="field-label">
                 <label class="label">a</label>
               </div>
               <div class="field-body">
-                <div class="field">
-                  <p class="control">
-                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="a" maxlength="64" value="0">
-                  </p>
-                </div>
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="a" maxlength="64" value="0">
               </div>
             </div>
 
             <br>
 
-            <div class="field is-horizontal has-text-centered m-auto">
-              <div class="field-label is-normal">
+            <div class="field is-horizontal has-text-centered m-auto" style="width:25%">
+              <div class="field-label">
                 <label class="label">b</label>
               </div>
               <div class="field-body">
-                <div class="field">
-                  <p class="control">
-                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="b" maxlength="64" value="30">
-                  </p>
-                </div>
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="b" maxlength="64" value="30">
               </div>
             </div>
 
@@ -141,31 +137,23 @@
 
             <br>
 
-            <div class="field is-horizontal has-text-centered m-auto">
-              <div class="field-label is-normal">
+            <div class="field is-horizontal has-text-centered m-auto" style="width:25%">
+              <div class="field-label">
                 <label class="label">g</label>
               </div>
               <div class="field-body">
-                <div class="field">
-                  <p class="control">
-                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="g" maxlength="64" value="7">
-                  </p>
-                </div>
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="g" maxlength="64" value="7">
               </div>
             </div>
 
             <br>
 
-            <div class="field is-horizontal has-text-centered m-auto">
-              <div class="field-label is-normal">
+            <div class="field is-horizontal has-text-centered m-auto" style="width:25%">
+              <div class="field-label has-text-centered m-auto">
                 <label class="label">h (generado por g)</label>
               </div>
               <div class="field-body">
-                <div class="field">
-                  <p class="control">
                     <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="h" maxlength="64" value="14">
-                  </p>
-                </div>
               </div>
             </div>
 
@@ -180,46 +168,34 @@
 
             <br>
 
-            <div class="field is-horizontal has-text-centered m-auto">
-              <div class="field-label is-normal">
+            <div class="field is-horizontal has-text-centered m-auto" style="width:25%">
+              <div class="field-label">
                 <label class="label">t</label>
               </div>
               <div class="field-body">
-                <div class="field">
-                  <p class="control">
-                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="t" maxlength="64" value="5">
-                  </p>
-                </div>
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="t" maxlength="64" value="5">
               </div>
             </div>
 
             <br>
 
-            <div class="field is-horizontal has-text-centered m-auto">
-              <div class="field-label is-normal">
+            <div class="field is-horizontal has-text-centered m-auto" style="width:25%">
+              <div class="field-label">
                 <label class="label">l</label>
               </div>
               <div class="field-body">
-                <div class="field">
-                  <p class="control">
-                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="l" maxlength="64" value="3">
-                  </p>
-                </div>
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="l" maxlength="64" value="3">
               </div>
             </div>
 
             <br>
 
-            <div class="field is-horizontal has-text-centered m-auto">
-              <div class="field-label is-normal">
+            <div class="field is-horizontal has-text-centered m-auto" style="width:25%">
+              <div class="field-label">
                 <label class="label">s</label>
               </div>
               <div class="field-body">
-                <div class="field">
-                  <p class="control">
-                    <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="s" maxlength="64" value="4">
-                  </p>
-                </div>
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="s" maxlength="64" value="4">
               </div>
             </div>
 
@@ -227,7 +203,9 @@
 
           </div>
         </div>
-      </div >
+      </div>
+
+      <br><br>
 
       <div class="footer has-text-centered">
         <button type="submit" class="button is-primary is-centered"> Continuar </button>

@@ -19,8 +19,7 @@ class proofS:
     proof_ss: proveSS
 
 
-def proveS(x, n, r1, g, h, b, params, debug=False):
-    E = (Mod(g, n) ** (Mod(x, n) ** 2).x * Mod(h, n) ** r1).x
+def proveS(x, n, E, r1, g, h, b, params, debug=False):
     r2 = random.randint(-2 ** params.s * n + 1, 2 ** params.s * n - 1)
     F = (Mod(g, n) ** x * Mod(h, n) ** r2).x
     r3 = r1 - r2 * x
@@ -43,11 +42,10 @@ def verifyS(n, g, h, proof, debug=False):
     return verifySS(proof.E, proof.F, n, proof.F, g, h, h, proof.proof_ss, debug)
 
 
-def proveS_Flask(x, n, r1, g, h, b, params, debug=False):
+def proveS_Flask(x, n, E, r1, g, h, b, params, debug=False):
     """
     Mismo funcionamiento que proveS, pero devolviendo parámetros extra para visualización.
     """
-    E = (Mod(g, n) ** (Mod(x, n) ** 2).x * Mod(h, n) ** r1).x
     r2 = random.randint(-2 ** params.s * n + 1, 2 ** params.s * n - 1)
     F = (Mod(g, n) ** x * Mod(h, n) ** r2).x
     r3 = r1 - r2 * x

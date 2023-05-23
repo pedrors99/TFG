@@ -87,7 +87,7 @@
             $$\theta = 2^{t+l+1}\sqrt{b - a}$$
           </p>
         </div>
-      </div >
+      </div>
 
       <div class="block">
         <button type="button" class="collapsible" style="width:75%"><b>Entrada</b></button>
@@ -189,24 +189,24 @@
           <p>E<sub>b<sub>1</sub></sub> = g<sup>x<sub>b<sub>1</sub></sub><sup>2</sup></sup> h<sup>r<sub>b<sub>1</sub></sub></sup> (mod n) = {{inputs.g}}<sup>{{ext_wt.xa2}}<sup>2</sup></sup> {{inputs.h}}<sup>{{ext_wt.ra2}}</sup> (mod {{inputs.n}}) = {{proof_wt.Eb1}}</p>
           <p>E<sub>b<sub>2</sub></sub> = g<sup>x<sub>b<sub>2</sub></sub></sup> h<sup>r<sub>b<sub>2</sub></sub></sup> (mod n) = {{inputs.g}}<sup>{{ext_wt.xb2}}</sup> {{inputs.h}}<sup>{{ext_wt.rb2}}</sup> (mod {{inputs.n}}) = {{proof_wt.Eb2}}</p>
           <br>
-          <p>proof<sub>S<sub>a</sub></sub> = Prove<sub>S</sub> (x<sub>a<sub>1</sub></sub>, r<sub>a<sub>1</sub></sub>, E<sub>a<sub>1</sub></sub>) = ({{proof_sa.E}}, {{proof_sa.F}}, ({{proof_sa.proof_c}}, {{proof_sa.proof_D}}, {{proof_sa.proof_D1}}, {{proof_sa.proof_D2}}))</p>
-          <p>proof<sub>S<sub>b</sub></sub> = Prove<sub>S</sub> (x<sub>b<sub>1</sub></sub>, r<sub>b<sub>1</sub></sub>, E<sub>b<sub>1</sub></sub>) = ({{proof_sb.E}}, {{proof_sb.F}}, ({{proof_sb.proof_c}}, {{proof_sb.proof_D}}, {{proof_sb.proof_D1}}, {{proof_sb.proof_D2}}))</p>
+          <p>proof<sub>S<sub>a</sub></sub> = Prove<sub>S</sub> (x<sub>a<sub>1</sub></sub>, n, E<sub>a<sub>1</sub></sub>, r<sub>a<sub>1</sub></sub>, g, h, a, b, (t, l, s)) = Prove<sub>S</sub> ({{ext_wt.xa1}}, {{inputs.n}}, {{proof_wt.Ea1}}, {{ext_wt.ra1}}, {{inputs.g}}, {{inputs.h}}, {{inputs.a}}, {{inputs.b}}, ({{params.t}}, {{params.l}}, {{params.s}})) = ({{proof_sa.E}}, {{proof_sa.F}}, ({{proof_sa.proof_c}}, {{proof_sa.proof_D}}, {{proof_sa.proof_D1}}, {{proof_sa.proof_D2}}))</p>
+          <p>proof<sub>S<sub>b</sub></sub> = Prove<sub>S</sub> (x<sub>b<sub>1</sub></sub>, n, E<sub>b<sub>1</sub></sub>, r<sub>b<sub>1</sub></sub>, g, h, a, b, (t, l, s)) = Prove<sub>S</sub> ({{ext_wt.xb1}}, {{inputs.n}}, {{proof_wt.Eb1}}, {{ext_wt.rb1}}, {{inputs.g}}, {{inputs.h}}, {{inputs.a}}, {{inputs.b}}, ({{params.t}}, {{params.l}}, {{params.s}})) = ({{proof_sb.E}}, {{proof_sb.F}}, ({{proof_sb.proof_c}}, {{proof_sb.proof_D}}, {{proof_sb.proof_D1}}, {{proof_sb.proof_D2}}))</p>
           <br>
-          <p>proof<sub>LI<sub>a</sub></sub> = Prove<sub>LI</sub> (x<sub>a<sub>2</sub></sub>, r<sub>a<sub>2</sub></sub>, E<sub>a<sub>2</sub></sub>) = ({{proof_lia.C}}, {{proof_lia.D1}}, {{proof_lia.D2}}, {{proof_lia.c}})</p>
-          <p>proof<sub>LI<sub>b</sub></sub> = Prove<sub>LI</sub> (x<sub>b<sub>2</sub></sub>, r<sub>b<sub>2</sub></sub>, E<sub>b<sub>2</sub></sub>) = ({{proof_lib.C}}, {{proof_lib.D1}}, {{proof_lib.D2}}, {{proof_lib.c}})</p>
+          <p>proof<sub>LI<sub>a</sub></sub> = Prove<sub>LI</sub> (x<sub>a<sub>2</sub></sub>, n, g, h, r<sub>a<sub>2</sub></sub>, a, b, (t, l, s)) = Prove<sub>LI</sub> ({{ext_wt.xa2}}, {{inputs.n}}, {{inputs.g}}, {{inputs.h}}, {{ext_wt.ra2}}, {{inputs.a}}, {{inputs.b}}, ({{params.t}}, {{params.l}}, {{params.s}})) = ({{proof_lia.C}}, {{proof_lia.D1}}, {{proof_lia.D2}}, {{proof_lia.c}})</p>
+          <p>proof<sub>LI<sub>b</sub></sub> = Prove<sub>LI</sub> (x<sub>b<sub>2</sub></sub>, n, g, h, r<sub>b<sub>2</sub></sub>, a, b, (t, l, s)) = Prove<sub>LI</sub> ({{ext_wt.xb2}}, {{inputs.n}}, {{inputs.g}}, {{inputs.h}}, {{ext_wt.rb2}}, {{inputs.a}}, {{inputs.b}}, ({{params.t}}, {{params.l}}, {{params.s}})) = ({{proof_lib.C}}, {{proof_lib.D1}}, {{proof_lib.D2}}, {{proof_lib.c}})</p>
         </div>
       </div>
+    </div>
 
+    <form method="post">
       <div class="block">
         <button type="button" class="collapsible" style="width:75%"><b>Pruebas</b></button>
         <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
           <br>
-          <form method="post">
             <button type="submit" class="button is-dark is-centered" name="prove" value="proof_sa" style="margin-left: 50px; margin-right: 50px;"> proof<sub>S<sub>a</sub></sub> </button>
             <button type="submit" class="button is-dark is-centered" name="prove" value="proof_sb" style="margin-left: 50px; margin-right: 50px;"> proof<sub>S<sub>b</sub></sub> </button>
             <button type="submit" class="button is-dark is-centered" name="prove" value="proof_lia" style="margin-left: 50px; margin-right: 50px;"> proof<sub>LI<sub>a</sub></sub> </button>
             <button type="submit" class="button is-dark is-centered" name="prove" value="proof_lib" style="margin-left: 50px; margin-right: 50px;"> proof<sub>LI<sub>b</sub></sub> </button>
-          </form>
           <br>
         </div>
       </div>
@@ -214,85 +214,303 @@
       <div class="block">
         <button type="button" class="collapsible" style="width:75%"><b>Salida</b></button>
         <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
-          <div class="container" style="width:10%; position:relative;">
-            <table>
-              <tbody>
-                <tr>
-                  <th> E<sub>a</sub>: </th>
-                  <td> {{proof_wt.Ea}} </td>
-                </tr>
-                <tr>
-                  <th> E<sub>a<sub>1</sub></sub>: </th>
-                  <td> {{proof_wt.Ea1}} </td>
-                </tr>
-                <tr>
-                  <th> E<sub>a<sub>2</sub></sub>: </th>
-                  <td> {{proof_wt.Ea2}} </td>
-                </tr>
-              </tbody>
-            </table>
+          <br>
 
-            <table>
-              <tbody>
-                <tr>
-                  <th> E<sub>b</sub>: </th>
-                  <td> {{proof_wt.Eb}} </td>
-                </tr>
-                <tr>
-                  <th> E<sub>b<sub>1</sub></sub>: </th>
-                  <td> {{proof_wt.Eb1}} </td>
-                </tr>
-                <tr>
-                  <th> E<sub>b<sub>2</sub></sub>: </th>
-                  <td> {{proof_wt.Eb2}} </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="block has-text-centered m-auto" style="width:25%">
+            <div class="field is-horizontal has-text-centered m-auto">
+            <div class="field-label is-normal">
+                <label class="label">E<sub>a</sub></label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="Ea" name="Ea" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+            <div class="field-label is-normal">
+                <label class="label">E<sub>a<sub>1</sub></sub></label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="Ea1" name="Ea1" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+            <div class="field-label is-normal">
+                <label class="label">E<sub>a<sub>2</sub></sub></label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="Ea2" name="Ea2" maxlength="64" value="7">
+              </div>
+            </div>
           </div>
 
           <br>
 
-          <div class="container" style="width:40%; position:relative;">
-            <table>
-              <tbody>
-                <tr>
-                  <th> proof<sub>S<sub>a</sub></sub>: </th>
-                  <td> ({{proof_sa.E}}, {{proof_sa.F}}, ({{proof_sa.proof_c}}, {{proof_sa.proof_D}}, {{proof_sa.proof_D1}}, {{proof_sa.proof_D2}})) </td>
-                </tr>
-                <tr>
-                  <th> proof<sub>S<sub>b</sub></sub>: </th>
-                  <td> ({{proof_sb.E}}, {{proof_sb.F}}, ({{proof_sb.proof_c}}, {{proof_sb.proof_D}}, {{proof_sb.proof_D1}}, {{proof_sb.proof_D2}})) </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="block has-text-centered m-auto" style="width:25%">
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">E<sub>b</sub></label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="Eb" name="Eb" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">E<sub>b<sub>1</sub></sub></label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="Eb1" name="Eb1" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+            <div class="field-label is-normal">
+              <label class="label">E<sub>b<sub>2</sub></sub></label>
+            </div>
+            <div class="field-body">
+              <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="Eb2" name="Eb2" maxlength="64" value="7">
+            </div>
+          </div>
           </div>
 
           <br>
 
-          <div class="container" style="width:30%; position:relative;">
-            <table>
-              <tbody>
-                <tr>
-                  <th> proof<sub>LI<sub>a</sub></sub>: </th>
-                  <td> ({{proof_lia.C}}, {{proof_lia.D1}}, {{proof_lia.D2}}, {{proof_lia.c}}) </td>
-                </tr>
-                <tr>
-                  <th> proof<sub>LI<sub>b</sub></sub>: </th>
-                  <td> ({{proof_lib.C}}, {{proof_lib.D1}}, {{proof_lib.D2}}, {{proof_lib.c}}) </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="block has-text-centered m-auto" style="width:25%">
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>a</sub></sub>.E</label>
+              </div>
+              <div class="field-body">
+                <label class="label has-text-centered m-auto">E<sub>a<sub>1</sub></sub></label>
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>a</sub></sub>.F</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_sa.F" name="proof_sa.F" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>a</sub></sub>.proof<sub>SS</sub>.c</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_sa.proof_c" name="proof_sa.proof_c" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>a</sub></sub>.proof<sub>SS</sub>.D</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_sa.proof_D" name="proof_sa.proof_D" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>a</sub></sub>.proof<sub>SS</sub>.D1</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_sa.proof_D1" name="proof_sa.proof_D1" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>a</sub></sub>.proof<sub>SS</sub>.D2</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_sa.proof_D2" name="proof_sa.proof_D2" maxlength="64" value="7">
+              </div>
+            </div>
           </div>
+
+          <br>
+
+          <div class="block has-text-centered m-auto" style="width:25%">
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>b</sub></sub>.E</label>
+              </div>
+              <div class="field-body">
+                <label class="label has-text-centered m-auto">E<sub>b<sub>1</sub></sub></label>
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>b</sub></sub>.F</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_sb.F" name="proof_sb.F" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>b</sub></sub>.proof<sub>SS</sub>.c</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_sb.proof_c" name="proof_sb.proof_c" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>b</sub></sub>.proof<sub>SS</sub>.D</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_sb.proof_D" name="proof_sb.proof_D" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>b</sub></sub>.proof<sub>SS</sub>.D1</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_sb.proof_D1" name="proof_sb.proof_D1" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>S<sub>b</sub></sub>.proof<sub>SS</sub>.D2</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_sb.proof_D2" name="proof_sb.proof_D2" maxlength="64" value="7">
+              </div>
+            </div>
+          </div>
+
+          <br>
+
+          <div class="block has-text-centered m-auto" style="width:25%">
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>LI<sub>a</sub></sub>.C</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_lia.C1" name="proof_lia.C1" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>LI<sub>a</sub></sub>.D1</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_lia.D1" name="proof_lia.D1" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>LI<sub>a</sub></sub>.D2</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_lia.D2" name="proof_lia.D2" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>LI<sub>a</sub></sub>.c</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_lia.c2" name="proof_lia.c2" maxlength="64" value="7">
+              </div>
+            </div>
+          </div>
+
+          <br>
+
+          <div class="block has-text-centered m-auto" style="width:25%">
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>LI<sub>b</sub></sub>.C</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_lib.C1" name="proof_lib.C1" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>LI<sub>b</sub></sub>.D1</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_lib.D1" name="proof_lib.D1" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>LI<sub>b</sub></sub>.D2</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_lib.D2" name="proof_lib.D2" maxlength="64" value="7">
+              </div>
+            </div>
+
+            <div class="field is-horizontal has-text-centered m-auto">
+              <div class="field-label is-normal">
+                <label class="label">proof<sub>LI<sub>b</sub></sub>.c</label>
+              </div>
+              <div class="field-body">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" id="proof_lib.c2" name="proof_lib.c2" maxlength="64" value="7">
+              </div>
+            </div>
+          </div>
+
+          <script>
+            document.getElementById("Ea").value = {{proof_wt.Ea}};
+            document.getElementById("Ea1").value = {{proof_wt.Ea1}};
+            document.getElementById("Ea2").value = {{proof_wt.Ea2}};
+
+            document.getElementById("Eb").value = {{proof_wt.Eb}};
+            document.getElementById("Eb1").value = {{proof_wt.Eb1}};
+            document.getElementById("Eb2").value = {{proof_wt.Eb2}};
+
+            document.getElementById("proof_sa.F").value = {{proof_sa.F}};
+            document.getElementById("proof_sa.proof_c").value = {{proof_sa.proof_c}};
+            document.getElementById("proof_sa.proof_D").value = {{proof_sa.proof_D}};
+            document.getElementById("proof_sa.proof_D1").value = {{proof_sa.proof_D1}};
+            document.getElementById("proof_sa.proof_D2").value = {{proof_sa.proof_D2}};
+
+            document.getElementById("proof_sb.F").value = {{proof_sb.F}};
+            document.getElementById("proof_sb.proof_c").value = {{proof_sb.proof_c}};
+            document.getElementById("proof_sb.proof_D").value = {{proof_sb.proof_D}};
+            document.getElementById("proof_sb.proof_D1").value = {{proof_sb.proof_D1}};
+            document.getElementById("proof_sb.proof_D2").value = {{proof_sb.proof_D2}};
+
+            document.getElementById("proof_lia.C1").value = {{proof_lia.C}};
+            document.getElementById("proof_lia.D1").value = {{proof_lia.D1}};
+            document.getElementById("proof_lia.D2").value = {{proof_lia.D2}};
+            document.getElementById("proof_lia.c2").value = {{proof_lia.c}};
+
+            document.getElementById("proof_lib.C1").value = {{proof_lib.C}};
+            document.getElementById("proof_lib.D1").value = {{proof_lib.D1}};
+            document.getElementById("proof_lib.D2").value = {{proof_lib.D2}};
+            document.getElementById("proof_lib.c2").value = {{proof_lib.c}};
+          </script>
         </div>
       </div>
-    </div>
 
-    <div class="footer has-text-centered">
-      <form method="post">
+      <div class="footer has-text-centered">
         <button type="submit" onclick="history.back()" class="button is-primary is-centered" name="prove" value="back" style="margin-left: 50px; margin-right: 50px;"> Volver </button>
         <button type="submit" class="button is-primary is-centered" name="prove" value="verifier" style="margin-left: 50px; margin-right: 50px;"> Verificar </button>
-      </form>
-    </div>
+      </div>
+    </form>
 
     <br><br>
 

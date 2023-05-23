@@ -40,21 +40,24 @@ class Mod:
             self.assertFalse(True)
 
     def inverse(self):
-        q = np.empty(0)
-        r = np.array([self.p, self.x])
-        u = np.array([1, 0])
-        v = np.array([0, 1])
+        if self.x != 0:
+            q = np.empty(0)
+            r = np.array([self.p, self.x])
+            u = np.array([1, 0])
+            v = np.array([0, 1])
 
-        while True:
-            q = np.append(q, int(r[len(r) - 2] / r[len(r) - 1]))
-            r = np.append(r, int(r[len(r) - 2] % r[len(r) - 1]))
-            if r[len(r)-1] == 0:
-                break
-            u = np.append(u, int(u[len(u)-2] - q[len(q)-1] * u[len(u)-1]))
-            v = np.append(v, int(v[len(v)-2] - q[len(q)-1] * v[len(v)-1]))
+            while True:
+                q = np.append(q, int(r[len(r) - 2] / r[len(r) - 1]))
+                r = np.append(r, int(r[len(r) - 2] % r[len(r) - 1]))
+                if r[len(r)-1] == 0:
+                    break
+                u = np.append(u, int(u[len(u)-2] - q[len(q)-1] * u[len(u)-1]))
+                v = np.append(v, int(v[len(v)-2] - q[len(q)-1] * v[len(v)-1]))
 
-        assert(r[len(r)-2] == 1)
-        return Mod(v[len(v)-1], self.p)
+            assert(r[len(r)-2] == 1), "Error al calcular el inverso de {}".format(self)
+            return Mod(v[len(v)-1], self.p)
+        else:
+            return self
 
     def __pow__(self, n):
         if self.x == 0 or self.x == 1:
