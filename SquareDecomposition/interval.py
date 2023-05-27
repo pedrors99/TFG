@@ -34,7 +34,7 @@ def proveLI(x, n, g, h, r, b, params, debug=False):
         D1 = w + x * c
         D2 = eta + r * c
 
-        if c * b <= D1 <= 2 ** (params.t + params.s) * b - 1:
+        if c * b <= D1 <= 2 ** (params.t + params.l) * b - 1:
             loop = False
 
     if debug:
@@ -74,7 +74,7 @@ def proveLI_Flask(x, n, g, h, r, b, params, debug=False):
         D1 = w + x * c
         D2 = eta + r * c
 
-        if c * b <= D1 <= 2 ** (params.t + params.s) * b - 1:
+        if c * b <= D1 <= 2 ** (params.t + params.l) * b - 1:
             loop = False
 
     ext_li = {'w': int(w), 'eta': int(eta), 'omega': int(omega), 'int1': int(2 ** (params.t + params.l) * b - 1),

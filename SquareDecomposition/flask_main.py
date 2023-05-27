@@ -13,26 +13,22 @@ app = Flask(__name__, template_folder='html')
 @app.route('/', methods=['POST', 'GET'])
 def input():
     if request.method == 'POST':
-        x = int(request.form['x'])
-        n = int(request.form['n'])
+        cont = int(request.form['continue'])
 
-        a = int(request.form['a'])
-        b = int(request.form['b'])
+        if cont:
+            x = int(request.form['x'])
+            n = int(request.form['n'])
 
-        g = int(request.form['g'])
-        h = int(request.form['h'])
+            a = int(request.form['a'])
+            b = int(request.form['b'])
 
-        t = int(request.form['t'])
-        l = int(request.form['l'])
-        s = int(request.form['s'])
+            g = int(request.form['g'])
+            h = int(request.form['h'])
 
-        if a > b:
-            return render_template('input.html', alert=1)
-        elif x < a:
-            return render_template('input.html', alert=2)
-        elif x > b:
-            return render_template('input.html', alert=3)
-        else:
+            t = int(request.form['t'])
+            l = int(request.form['l'])
+            s = int(request.form['s'])
+
             session['inputs'] = {'x': x, 'n': n, 'a': a, 'b': b, 'g': g, 'h': h}
             session['params'] = {'t': t, 'l': l, 's': s}
 
@@ -76,8 +72,10 @@ def input():
             session['ext_lib'] = ext_lib
 
             return redirect(url_for('proveSD'))
+        else:
+            return render_template('input.html')
     else:
-        return render_template('input.html', alert=0)
+        return render_template('input.html')
 
 
 def modifyResults():

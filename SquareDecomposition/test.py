@@ -84,21 +84,19 @@ def addError(n, g, h, b, proof):
 
 
 if __name__ == '__main__':
-    t = 5
-    l = 3
-    s = 4
-
-    n = 1213
-
-    ns = [13, 59, 157, 331, 647, 991, 1223, 1607, 2543, 4391, 7457, 13009, 19381, 26891, 40031]
+    ns = [13, 59, 157, 331, 647, 991, 1223, 1607, 2543, 4391, 7457, 11657, 16883, 23087, 32119]
 
     tp = 0
     fp = 0
     tn = 0
     fn = 0
 
-    for n in tqdm(ns, position=0, desc="Total Progress", bar_format='{l_bar}{bar:20}{r_bar}', colour='green'):
-        for i in tqdm(range(200), position=1, desc="Progress with n = {}".format(n), bar_format='{l_bar}{bar:20}{r_bar}', colour='green', leave=False):
+    for n in tqdm(ns, position=0, desc="Progreso total", bar_format='{l_bar}{bar:20}{r_bar}', colour='green'):
+        for i in tqdm(range(200), position=1, desc="Progreso con n = {}".format(n), bar_format='{l_bar}{bar:20}{r_bar}', colour='green', leave=False):
+            t = random.randint(1, 6)
+            l = random.randint(1, 6)
+            s = random.randint(1, 6)
+
             a = random.randint(0, n-1)
             b = random.randint(a+1, n)
 
@@ -118,7 +116,7 @@ if __name__ == '__main__':
             if result:
                 tp += 1
             else:
-                tp += 1
+                fn += 1
 
             g, h, b, proof = addError(n, g, h, b, proof)
 
@@ -129,13 +127,13 @@ if __name__ == '__main__':
             else:
                 tn += 1
 
-    print("\nTrue Positives:  {}\t\tFalse Positives: {}\nFalse Negatives: {}\t\tTrue Negatives:  {}".format(tp, fp, fn, tn))
+    print("\nVerdadero Positivo:  {}\t\tFalso Positivo: {}\nFalso Negativo: {}\t\tVerdadero Negativo:  {}".format(tp, fp, fn, tn))
     data = [[tp, fp], [fn, tn]]
     ax = sns.heatmap(data, annot=True, cmap='Blues', fmt='d', cbar=False)
     ax.axes.set_xticklabels(["True", "False"])
     ax.axes.set_yticklabels(["True", "False"])
-    plt.title("Confusion matrix")
-    plt.xlabel("Number of Expected Results")
-    plt.ylabel("Number of Obtained Results")
+    plt.title("Matriz de Confusión")
+    plt.xlabel("Número de Resultados Esperados")
+    plt.ylabel("Número de Resultados Obtenidos")
     plt.show()
 

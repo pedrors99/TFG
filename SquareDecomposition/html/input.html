@@ -55,18 +55,6 @@
       Square Decomposition
     </h1>
 
-    <script>
-      if ({{alert}} > 0) {
-        if ({{alert}} == 1) {
-          alert("a tiene que ser menor que b.");
-        } else if ({{alert}} == 2) {
-          alert("a tiene que ser menor que x.");
-        } else if ({{alert}} == 3) {
-          alert("b tiene que ser mayor que x.");
-        }
-      }
-    </script>
-
     <form action="http://localhost:5000/" method="post">
       <div class="block">
         <div class="block">
@@ -80,7 +68,7 @@
                 <label class="label">x (Secreto)</label>
               </div>
               <div class="field-body">
-                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="x" maxlength="64" value="13">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="x" id="x" maxlength="64" value="13">
               </div>
             </div>
 
@@ -91,7 +79,7 @@
                 <label class="label">n (Módulo)</label>
               </div>
               <div class="field-body">
-                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="n" maxlength="64" value="221">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="n" id="n" maxlength="64" value="221">
               </div>
             </div>
 
@@ -111,7 +99,7 @@
                 <label class="label">a</label>
               </div>
               <div class="field-body">
-                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="a" maxlength="64" value="0">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="a" id="a" maxlength="64" value="0">
               </div>
             </div>
 
@@ -122,7 +110,7 @@
                 <label class="label">b</label>
               </div>
               <div class="field-body">
-                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="b" maxlength="64" value="30">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="b" id="b" maxlength="64" value="30">
               </div>
             </div>
 
@@ -208,9 +196,39 @@
       <br><br>
 
       <div class="footer has-text-centered">
-        <button type="submit" class="button is-primary is-centered"> Continuar </button>
+        <script>
+          function checkValues() {
+            let x = parseInt(document.getElementById("x").value);
+            let n = parseInt(document.getElementById("n").value);
+            let a = parseInt(document.getElementById("a").value);
+            let b = parseInt(document.getElementById("b").value);
+
+            let redirect = false;
+
+            if (b >= n) {
+              alert("n tiene que ser mayor que b.");
+            } else if (a > b) {
+              alert("b tiene que ser mayor que a.");
+            } else if (a > x) {
+              alert("x tiene que ser mayor que a.");
+            } else if (x > b) {
+              alert("b tiene que ser mayor que x.");
+            } else {
+              redirect = true;
+             }
+
+             if (redirect) {
+              document.getElementById("continue").value = "1";
+             } else {
+              document.getElementById("continue").value = "0";
+             }
+          }
+        </script>
+
+        <button type="submit" class="button is-primary is-centered" value="0" id="continue" name="continue" onclick="checkValues()"> Continuar </button>
       </div>
     </form>
+
     <script>
         var coll = document.getElementsByClassName("collapsible");
         var i;

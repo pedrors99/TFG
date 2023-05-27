@@ -62,6 +62,35 @@
 
     <div class="block">
       <div class="block">
+        <button type="button" class="collapsible" id="resultado" style="width:75%"><b>Resultado</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <div id="Result">
+            <p>{{result}}</p>
+          </div>
+
+          <script>
+          if ({{result}}) {
+            document.getElementById("Result").style.color  = "#009900";
+            document.getElementById("Result").textContent = "• Correcto •";
+          } else {
+            document.getElementById("Result").style.color = "#990000";
+            document.getElementById("Result").textContent = "• Incorrecto •";
+          }
+          </script>
+        </div>
+
+        <script>
+          var coll = document.getElementById("resultado");
+          var content = coll.nextElementSibling;
+          if (content.style.maxHeight){
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        </script>
+      </div>
+
+      <div class="block">
         <button type="button" class="collapsible" style="width:75%"><b>Entrada</b></button>
         <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
           <div class="container" style="width:10%; position:relative;">
@@ -147,25 +176,6 @@
           <p>cond1 = (cb &le; D<sub>1</sub> &le; 2<sup>t + l</sup>b - 1) = ({{proof.c}} · {{inputs.b}} &le; {{proof.D1}} &le; 2<sup>{{params.t}} + {{params.l}}</sup>{{inputs.b}} - 1) = ({{ext.val1}} &le; {{proof.D1}} &le; {{ext.val2}}) = {{ext.cond1}}</p>
           <p>cond2 = (C == Hash(g<sup>D<sub>1</sub></sup> h<sup>D<sub>2</sub></sup> E<sup>-c</sup> (mod n)) = ({{proof.C}} == Hash({{inputs.g}}<sup>{{proof.D1}}</sup> {{inputs.h}}<sup>{{proof.D2}}</sup> {{ext.E}}<sup>-{{proof.c}}</sup> (mod {{inputs.n}})) = ({{proof.C}} == {{ext.val3}}) = {{ext.cond2}}</p>
           <p><b>return</b> (cond<sub>1</sub> <b>and</b> cond<sub>2</sub>) = ({{ext.cond1}} <b>and</b> {{ext.cond2}})</p>
-        </div>
-      </div>
-
-      <div class="block">
-        <button type="button" class="collapsible" style="width:75%"><b>Resultado</b></button>
-        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
-          <div id="Result">
-            <p>{{result}}</p>
-          </div>
-
-          <script>
-          if ({{result}}) {
-            document.getElementById("Result").style.color  = "#009900";
-            document.getElementById("Result").textContent = "• Correcto •";
-          } else {
-            document.getElementById("Result").style.color = "#990000";
-            document.getElementById("Result").textContent = "• Incorrecto •";
-          }
-          </script>
         </div>
       </div>
     </div>

@@ -62,6 +62,35 @@
 
     <div class="block">
       <div class="block">
+        <button type="button" class="collapsible" id="resultado" style="width:75%"><b>Resultado</b></button>
+        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+          <div id="Result">
+            <p>{{result}}</p>
+          </div>
+
+          <script>
+          if ({{result}}) {
+            document.getElementById("Result").style.color  = "#009900";
+            document.getElementById("Result").textContent = "• Correcto •";
+          } else {
+            document.getElementById("Result").style.color = "#990000";
+            document.getElementById("Result").textContent = "• Incorrecto •";
+          }
+          </script>
+        </div>
+
+        <script>
+          var coll = document.getElementById("resultado");
+          var content = coll.nextElementSibling;
+          if (content.style.maxHeight){
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        </script>
+      </div>
+
+      <div class="block">
         <button type="button" class="collapsible" style="width:75%"><b>Entrada</b></button>
         <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
           <div class="container" style="width:10%; position:relative;">
@@ -197,25 +226,6 @@
           <p>    <b>return</b> (cond<sub>3</sub> and cond<sub>4</sub> and cond<sub>5</sub> and cond<sub>6</sub>) = ({{ext.cond3}} and {{ext.cond4}} and {{ext.cond5}} and {{ext.cond6}})</p>
           <p><b>else:</b></p>
           <p>    <b>return</b> False</p>
-        </div>
-      </div>
-
-      <div class="block">
-        <button type="button" class="collapsible" style="width:75%"><b>Resultado</b></button>
-        <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
-          <div id="Result">
-            <p>{{result}}</p>
-          </div>
-
-          <script>
-          if ({{result}}) {
-            document.getElementById("Result").style.color  = "#009900";
-            document.getElementById("Result").textContent = "• Correcto •";
-          } else {
-            document.getElementById("Result").style.color = "#990000";
-            document.getElementById("Result").textContent = "• Incorrecto •";
-          }
-          </script>
         </div>
       </div>
 

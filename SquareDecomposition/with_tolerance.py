@@ -163,7 +163,7 @@ def verifyWT_Flask(n, g, h, b, proof, params, debug=False):
     cond1 = (proof.Ea2 == (Mod(proof.Ea, n) * Mod(proof.Ea1, n).inverse()).x)
     cond2 = (proof.Eb2 == (Mod(proof.Eb, n) * Mod(proof.Eb1, n).inverse()).x)
 
-    if cond1 and cond2:
+    if cond1 and cond2 and proof.Ea1 == proof.proof_sa.E and proof.Eb1 == proof.proof_sb.E:
         cond3 = verifyS(n, g, h, proof.proof_sa, debug)
         cond4 = verifyS(n, g, h, proof.proof_sb, debug)
 
