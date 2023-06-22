@@ -1,8 +1,10 @@
+import random
 import math
 from dataclasses import dataclass
 
 from mod import Mod
-from with_tolerance import proveWT, verifyWT, proofWT
+from square import proveS, verifyS, proofS, proveS_Flask
+from interval import proveLI, verifyLI, proofLI, proveLI_Flask
 
 
 @dataclass
@@ -14,31 +16,167 @@ class paramsSD:
 
 @dataclass
 class proofSD:
-    E_: int
-    proof_wt: proofWT
+    Ea: int
+    Eb: int
+    Ea1: int
+    Ea2: int
+    Eb1: int
+    Eb2: int
+    proof_sa: proofS
+    proof_sb: proofS
+    proof_lia: proofLI
+    proof_lib: proofLI
 
 
 def proveSD(x, n, g, h, r, a, b, E, params, debug=False):
-    T = 2 * (params.t + params.l + 1) + abs(b - a)
+    Ea = (Mod(E, n) * (Mod(g, n) ** a).inverse()).x
+    Eb = (Mod(g, n) ** b * Mod(E, n).inverse()).x
 
-    x_ = 2 ** T * x
-    r_ = 2 ** T * r
-    E_ = (Mod(E, n) ** (2 ** T)).x
+    xa = x - a
+    xb = b - x
 
-    print("x", x_, Mod(x_, n), "r", r_, Mod(r_, n), "E", E_, Mod(g, n) ** x_ * Mod(h, n) ** r_, Mod(g, n) ** Mod(x_, n).x * Mod(h, n) ** Mod(r_, n).x)
+    xa1 = math.floor(math.sqrt(x - a))
+    xa2 = xa - xa1 ** 2
 
-    print("TEST", E_, Mod(g, n) ** (2 ** T * x) * Mod(h, n) ** (2 ** T * r), Mod(g, n) ** x_ * Mod(h, n) ** r_)
+    xb1 = math.floor(math.sqrt(b - x))
+    xb2 = xb - xb1 ** 2
 
-    a_ = int(2 ** T * a - 2 ** ((params.t + params.l + T) / 2 - 1) * math.floor(math.sqrt(b - a)))
-    b_ = int(2 ** T * b + 2 ** ((params.t + params.l + T) / 2 - 1) * math.floor(math.sqrt(b - a)))
+    loop = True
+    while loop:
+        ra1 = random.randint(-2 ** params.s * n + 1, 2 ** params.s * n - 1)
+        ra2 = r - ra1
 
-    proof_wt = proveWT(x_, n, g, h, r_, a_, b_, E_, params, debug)
-    return proofSD(E_, proof_wt)
+        if -2 ** params.s * n + 1 < ra2 < 2 ** params.s * n - 1:
+            loop = False
+
+    rb1 = random.randint(-abs(r), abs(r))
+    rb2 = -r - rb1
+
+    Ea1 = (Mod(g, n) ** (xa1 ** 2) * Mod(h, n) ** ra1).x
+    Ea2 = (Mod(g, n) ** xa2 * Mod(h, n) ** ra2).x
+    Eb1 = (Mod(g, n) ** (xb1 ** 2) * Mod(h, n) ** rb1).x
+    Eb2 = (Mod(g, n) ** xb2 * Mod(h, n) ** rb2).x
+
+    proof_sa = proveS(xa1, n, Ea1, ra1, g, h, b, params)
+    proof_sb = proveS(xb1, n, Eb1, rb1, g, h, b, params)
+
+    proof_lia = proveLI(xa2, n, g, h, ra2, b, params)
+    proof_lib = proveLI(xb2, n, g, h, rb2, b, params)
+
+    if debug:
+        print("\t ---Prove with tolerance: Debug--- \t")
+        print("x: {}, n: {}, g: {}, h: {}, r: {}, a: {}, b: {}, E: {}, params.t: {}, params.l: {}, params.s: {}".format(x, n, g, h, r, a, b, E, params.t, params.l, params.s))
+        print("Ea: {}, Ea1: {}, Ea2: {}, Eb: {}, Eb1: {}, Eb2: {}".format(Ea, Ea1, Ea2, Eb, Eb1, Eb2))
+        print("xa: {}, xa1: {}, xa2: {}, xb: {}, xb1: {}, xb2: {}, ra1: {}, ra2: {}, rb1: {}, rb2: {}".format(xa, xa1, xa2, xb, xb1, xb2, ra1, ra2, rb1, rb2))
+        print("ProveSa: E: {}, F: {}, c: {}, D: {}, D1: {}, D2: {}".format(proof_sa.E, proof_sa.F, proof_sa.proof_ss.c, proof_sa.proof_ss.D, proof_sa.proof_ss.D1, proof_sa.proof_ss.D2))
+        print("ProveSb: E: {}, F: {}, c: {}, D: {}, D1: {}, D2: {}".format(proof_sb.E, proof_sb.F, proof_sb.proof_ss.c, proof_sb.proof_ss.D, proof_sb.proof_ss.D1, proof_sb.proof_ss.D2))
+        print("ProveLIa: C: {}, D1: {}, D2: {}, c: {}".format(proof_lia.C, proof_lia.D1, proof_lia.D2, proof_lia.c))
+        print("ProveLIb: C: {}, D1: {}, D2: {}, c: {} \n".format(proof_lib.C, proof_lib.D1, proof_lib.D2, proof_lib.c))
+
+    return proofSD(Ea, Eb, Ea1, Ea2, Eb1, Eb2, proof_sa, proof_sb, proof_lia, proof_lib)
 
 
-def verifySD(n, g, h, a, b, E, proof, params, debug=False):
-    T = 2 * (params.t + params.l + 1) + abs(b - a)
-    if proof.E_ == (Mod(E, n) ** (2 ** T)).x:
-        return verifyWT(n, g, h, b, proof.proof_wt, params, debug)
+def verifySD(n, g, h, b, proof, params, debug=False):
+    if debug:
+        print("\t ---Verify with tolerance: Debug--- \t")
+        print("Ea2: {}, Ea: {}, Ea1: {}, {} == {}".format(proof.Ea2, proof.Ea, proof.Ea1, proof.Ea2, (Mod(proof.Ea, n) * Mod(proof.Ea1, n).inverse()).x))
+        print("Eb2: {}, Eb: {}, Eb1: {}, {} == {}".format(proof.Eb2, proof.Eb, proof.Eb1, proof.Eb2, (Mod(proof.Eb, n) * Mod(proof.Eb1, n).inverse()).x))
+        print("bs: {} and {}".format(verifyS(n, g, h, proof.proof_sa), verifyS(n, g, h, proof.proof_sb)))
+        print("bli: {} and {}\n".format(verifyLI(proof.Ea2, n, g, h, b, proof.proof_lia, params), verifyLI(proof.Eb2, n, g, h, b, proof.proof_lib, params)))
+
+    if proof.Ea2 == (Mod(proof.Ea, n) * Mod(proof.Ea1, n).inverse()).x and proof.Eb2 == (Mod(proof.Eb, n) * Mod(proof.Eb1, n).inverse()).x:
+        bs = verifyS(n, g, h, proof.proof_sa, debug) and verifyS(n, g, h, proof.proof_sb, debug)
+        bli = verifyLI(proof.Ea2, n, g, h, b, proof.proof_lia, params, debug) and verifyLI(proof.Eb2, n, g, h, b, proof.proof_lib, params, debug)
+        return bs and bli
     else:
         return False
+
+
+def proveSD_Flask(x, n, g, h, r, a, b, E, params, debug=False):
+    """
+    Mismo funcionamiento que proveSD, pero devolviendo parámetros extra para visualización.
+    """
+    Ea = (Mod(E, n) * (Mod(g, n) ** a).inverse()).x
+    Eb = (Mod(g, n) ** b * Mod(E, n).inverse()).x
+
+    xa = x - a
+    xb = b - x
+
+    xa1 = math.floor(math.sqrt(x - a))
+    xa2 = xa - xa1 ** 2
+
+    xb1 = math.floor(math.sqrt(b - x))
+    xb2 = xb - xb1 ** 2
+
+    loop = True
+    while loop:
+        ra1 = random.randint(-2 ** params.s * n + 1, 2 ** params.s * n - 1)
+        ra2 = r - ra1
+
+        if -2 ** params.s * n + 1 < ra2 < 2 ** params.s * n - 1:
+            loop = False
+
+    rb1 = random.randint(-abs(r), abs(r))
+    rb2 = -r - rb1
+
+    Ea1 = (Mod(g, n) ** (xa1 ** 2) * Mod(h, n) ** ra1).x
+    Ea2 = (Mod(g, n) ** xa2 * Mod(h, n) ** ra2).x
+    Eb1 = (Mod(g, n) ** (xb1 ** 2) * Mod(h, n) ** rb1).x
+    Eb2 = (Mod(g, n) ** xb2 * Mod(h, n) ** rb2).x
+
+    proof_sa, ext_sa, ext_ssa = proveS_Flask(xa1, n, Ea1, ra1, g, h, b, params)
+    proof_sb, ext_sb, ext_ssb = proveS_Flask(xb1, n, Eb1, rb1, g, h, b, params)
+
+    # theta = math.floor(2 * math.sqrt(b-a))
+
+    proof_lia, ext_lia = proveLI_Flask(xa2, n, g, h, ra2, b, params)
+    proof_lib, ext_lib = proveLI_Flask(xb2, n, g, h, rb2, b, params)
+
+    ext_wt = {'xa': xa, 'xb': xb, 'ra1': ra1, 'ra2': ra2, 'rb1': rb1, 'rb2': rb2, 'xa1': xa1, 'xa2': xa2, 'xb1': xb1,
+              'xb2': xb2}
+
+    if debug:
+        print("\t ---Prove with tolerance: Debug--- \t")
+        print("x: {}, n: {}, g: {}, h: {}, r: {}, a: {}, b: {}, E: {}, params.t: {}, params.l: {}, params.s: {}".format(x, n, g, h, r, a, b, E, params.t, params.l, params.s))
+        print("Ea: {}, Ea1: {}, Ea2: {}, Eb: {}, Eb1: {}, Eb2: {}".format(Ea, Ea1, Ea2, Eb, Eb1, Eb2))
+        print("xa: {}, xa1: {}, xa2: {}, xb: {}, xb1: {}, xb2: {}, ra1: {}, ra2: {}, rb1: {}, rb2: {}".format(xa, xa1, xa2, xb, xb1, xb2, ra1, ra2, rb1, rb2))
+        print("ProveSa: E: {}, F: {}, c: {}, D: {}, D1: {}, D2: {}".format(proof_sa.E, proof_sa.F, proof_sa.proof_ss.c, proof_sa.proof_ss.D, proof_sa.proof_ss.D1, proof_sa.proof_ss.D2))
+        print("ProveSb: E: {}, F: {}, c: {}, D: {}, D1: {}, D2: {}".format(proof_sb.E, proof_sb.F, proof_sb.proof_ss.c, proof_sb.proof_ss.D, proof_sb.proof_ss.D1, proof_sb.proof_ss.D2))
+        print("ProveLIa: C: {}, D1: {}, D2: {}, c: {}".format(proof_lia.C, proof_lia.D1, proof_lia.D2, proof_lia.c))
+        print("ProveLIb: C: {}, D1: {}, D2: {}, c: {} \n".format(proof_lib.C, proof_lib.D1, proof_lib.D2, proof_lib.c))
+
+    return proofSD(Ea, Eb, Ea1, Ea2, Eb1, Eb2, proof_sa, proof_sb, proof_lia, proof_lib), ext_wt, ext_sa, ext_ssa,\
+        ext_sb, ext_ssb, ext_lia, ext_lib
+
+
+def verifySD_Flask(n, g, h, b, proof, params, debug=False):
+    """
+    Mismo funcionamiento que verifySD, pero devolviendo parámetros extra para visualización.
+    """
+    if debug:
+        print("\t ---Verify with tolerance: Debug--- \t")
+        print("Ea2: {}, Ea: {}, Ea1: {}, {} == {}".format(proof.Ea2, proof.Ea, proof.Ea1, proof.Ea2, (Mod(proof.Ea, n) * Mod(proof.Ea1, n).inverse()).x))
+        print("Eb2: {}, Eb: {}, Eb1: {}, {} == {}".format(proof.Eb2, proof.Eb, proof.Eb1, proof.Eb2, (Mod(proof.Eb, n) * Mod(proof.Eb1, n).inverse()).x))
+        print("bs: {} and {}".format(verifyS(n, g, h, proof.proof_sa), verifyS(n, g, h, proof.proof_sb)))
+        print("bli: {} and {}\n".format(verifyLI(proof.Ea2, n, g, h, b, proof.proof_lia, params), verifyLI(proof.Eb2, n, g, h, b, proof.proof_lib, params)))
+
+    cond1 = (proof.Ea2 == (Mod(proof.Ea, n) * Mod(proof.Ea1, n).inverse()).x)
+    cond2 = (proof.Eb2 == (Mod(proof.Eb, n) * Mod(proof.Eb1, n).inverse()).x)
+
+    if cond1 and cond2 and proof.Ea1 == proof.proof_sa.E and proof.Eb1 == proof.proof_sb.E:
+        cond3 = verifyS(n, g, h, proof.proof_sa, debug)
+        cond4 = verifyS(n, g, h, proof.proof_sb, debug)
+
+        cond5 = verifyLI(proof.Ea2, n, g, h, b, proof.proof_lia, params, debug)
+        cond6 = verifyLI(proof.Eb2, n, g, h, b, proof.proof_lib, params, debug)
+
+        bs = cond3 and cond4
+        bli = cond5 and cond6
+
+        ext = {'cond1': cond1, 'cond2': cond2, 'cond3': cond3, 'cond4': cond4, 'cond5': cond5, 'cond6': cond6}
+
+        return (bs and bli), ext
+    else:
+        ext = {'cond1': cond1, 'cond2': cond2, 'cond3': '?', 'cond4': '?', 'cond5': '?', 'cond6': '?'}
+
+        return False, ext

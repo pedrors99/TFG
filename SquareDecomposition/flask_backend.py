@@ -1,8 +1,8 @@
-from flask import Flask, redirect, url_for, request, render_template, session, flash
+from flask import Flask, redirect, url_for, request, render_template, session
 import random
 
 from mod import Mod
-from with_tolerance import paramsWT, proveWT_Flask, proofWT, verifyWT_Flask
+from square_decomposition import paramsSD, proveSD_Flask, proofSD, verifySD_Flask
 from square import paramsS, proofS, verifyS_Flask
 from same_secret import paramsSS, proofSS, verifySS_Flask
 from interval import paramsLI, proofLI, verifyLI_Flask
@@ -12,6 +12,9 @@ app = Flask(__name__, template_folder='html')
 
 @app.route('/', methods=['POST', 'GET'])
 def input():
+    """
+    Muestra la pantalla en la que se introducen los datos para el algoritmo.
+    """
     if request.method == 'POST':
         cont = int(request.form['continue'])
 
@@ -39,8 +42,8 @@ def input():
             session['r'] = r
 
             E = (Mod(g, n) ** x * Mod(h, n) ** r['r']).x
-            proof, ext_wt, ext_sa, ext_ssa, ext_sb, ext_ssb, ext_lia, ext_lib = proveWT_Flask(x, n, g, h, r['r'], a, b, E,
-                                                                                              paramsWT(t, l, s))
+            proof, ext_wt, ext_sa, ext_ssa, ext_sb, ext_ssb, ext_lia, ext_lib = proveSD_Flask(x, n, g, h, r['r'], a, b, E,
+                                                                                              paramsSD(t, l, s))
 
             proof_wt = {'E': int(E), 'Ea': int(proof.Ea), 'Eb': int(proof.Eb), 'Ea1': int(proof.Ea1),
                         'Ea2': int(proof.Ea2), 'Eb1': int(proof.Eb1), 'Eb2': int(proof.Eb2)}
@@ -79,6 +82,9 @@ def input():
 
 
 def modifyResults():
+    """
+    Actualiza los valores almacenados en la sesión de Flask con los introducidos en los campos de entrada.
+    """
     proof_wt = session['proof_wt']
     proof_wt["Ea"] = int(request.form['Ea'])
     proof_wt["Ea1"] = int(request.form['Ea1'])
@@ -129,6 +135,9 @@ def modifyResults():
 
 @app.route('/prove', methods=['POST', 'GET'])
 def proveSD():
+    """
+    Muestra la pantalla con la prueba de que un secreto pertenece a un intervalo.
+    """
     debug = False
 
     if request.method == 'POST':
@@ -172,6 +181,9 @@ def proveSD():
 
 @app.route('/verify', methods=['POST', 'GET'])
 def verifySD():
+    """
+    Muestra la pantalla con la verificación de la prueba de que un secreto pertenece a un intervalo.
+    """
     if request.method == 'POST':
         if request.form['verify'] == 'verify_lia':
             return redirect(url_for('verifyLI', verifyLI='verify_lia'))
@@ -191,7 +203,7 @@ def verifySD():
         proof_lia = session['proof_lia']
         proof_lib = session['proof_lib']
 
-        params_ = paramsWT(params['t'], params['l'], params['s'])
+        params_ = paramsSD(params['t'], params['l'], params['s'])
 
         proof_ssa_ = proofSS(proof_sa['proof_c'], proof_sa['proof_D'], proof_sa['proof_D1'], proof_sa['proof_D2'])
         proof_sa_ = proofS(proof_sa['E'], proof_sa['F'], proof_ssa_)
@@ -203,10 +215,10 @@ def verifySD():
 
         proof_lib_ = proofLI(proof_lib['C'], proof_lib['D1'], proof_lib['D2'], proof_lib['c'])
 
-        proof = proofWT(proof_wt['Ea'], proof_wt['Eb'], proof_wt['Ea1'], proof_wt['Ea2'], proof_wt['Eb1'],
+        proof = proofSD(proof_wt['Ea'], proof_wt['Eb'], proof_wt['Ea1'], proof_wt['Ea2'], proof_wt['Eb1'],
                         proof_wt['Eb2'], proof_sa_, proof_sb_, proof_lia_, proof_lib_)
 
-        result, ext = verifyWT_Flask(inputs['n'], inputs['g'], inputs['h'], inputs['b'], proof, params_)
+        result, ext = verifySD_Flask(inputs['n'], inputs['g'], inputs['h'], inputs['b'], proof, params_)
 
         return render_template('verify_sd.html', inputs=inputs, params=params, proof_wt=proof_wt, proof_sa=proof_sa,
                                proof_sb=proof_sb, proof_lia=proof_lia, proof_lib=proof_lib, result=int(result), ext=ext)
@@ -214,6 +226,9 @@ def verifySD():
 
 @app.route('/prove/proveS/<proveS>', methods=['POST', 'GET'])
 def proveS(proveS):
+    """
+    Muestra la pantalla con la prueba de que un compromiso esconde un cuadrado.
+    """
     if request.method == 'POST':
         if request.form['proveS'] == 'proof_ss':
             if proveS == 'proof_sa':
@@ -248,6 +263,9 @@ def proveS(proveS):
 
 @app.route('/verify/verifyS/<verifyS>',  methods=['POST', 'GET'])
 def verifyS(verifyS):
+    """
+    Muestra la pantalla con la verificación de la prueba de que un compromiso esconde un cuadrado.
+    """
     if request.method == 'POST':
         if request.form['verifyS'] == 'verify_ss':
             if verifyS == 'verify_sa':
@@ -272,6 +290,9 @@ def verifyS(verifyS):
 
 @app.route('/prove/proveS/<proveS>/proveSS/<proveSS>', methods=['POST', 'GET'])
 def proveSS(proveS, proveSS):
+    """
+    Muestra la pantalla con la prueba de que dos compromisos esconden el mismo secreto.
+    """
     if request.method == 'POST':
         if request.form['proveSS'] == 'verifySS':
             if proveS == 'proof_sa':
@@ -304,6 +325,9 @@ def proveSS(proveS, proveSS):
 
 @app.route('/verify/verifyS/<verifyS>/verifySS/<verifySS>',  methods=['GET'])
 def verifySS(verifyS, verifySS):
+    """
+    Muestra la pantalla con la verificación de la prueba de que dos compromisos esconden el mismo secreto.
+    """
     inputs = session['inputs']
 
     if verifySS == 'verify_ssa':
@@ -324,6 +348,9 @@ def verifySS(verifyS, verifySS):
 
 @app.route('/prove/proveLI/<proveLI>', methods=['POST', 'GET'])
 def proveLI(proveLI):
+    """
+    Muestra la pantalla con la prueba de que un número comprometido pertenece a un intervalo.
+    """
     if request.method == 'POST':
         if request.form['proveLI'] == 'verify':
             if proveLI == 'proof_lia':
@@ -351,6 +378,9 @@ def proveLI(proveLI):
 
 @app.route('/verify/verifyLI/<verifyLI>', methods=['GET'])
 def verifyLI(verifyLI):
+    """
+    Muestra la pantalla con la verificación de la prueba de que un número comprometido pertenece a un intervalo.
+    """
     inputs = session['inputs']
     params = session['params']
     proof_wt = session['proof_wt']

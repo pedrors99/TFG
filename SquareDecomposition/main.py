@@ -4,7 +4,6 @@ from mod import Mod
 from same_secret import paramsSS, proveSS, verifySS
 from square import paramsS, proveS, verifyS
 from interval import paramsLI, proveLI, verifyLI
-from with_tolerance import paramsWT, proveWT, verifyWT
 from square_decomposition import paramsSD, proveSD, verifySD
 
 
@@ -23,6 +22,9 @@ if __name__ == '__main__':
     r1 = random.randint(-2 ** s1 * n + 1, 2 ** s1 * n - 1)
     r2 = random.randint(-2 ** s2 * n + 1, 2 ** s2 * n - 1)
 
+    r1 = -101
+    r2 = 2483
+
     g1 = 7
     h1 = 21
     E = (Mod(g1, n) ** x * Mod(h1, n) ** r1).x
@@ -40,7 +42,8 @@ if __name__ == '__main__':
 
     print("Checking square...")
     params_s = paramsS(t, l, s1)
-    proof_s = proveS(x, n, E, r1, g1, h1, b, params_s)
+    E_square = (Mod(g1, n) ** (x ** 2) * Mod(h1, n) ** r1).x
+    proof_s = proveS(x, n, E_square, r1, g1, h1, b, params_s)
     print("Verifying square...")
     square = verifyS(n, g1, h1, proof_s)
     print("Square:", square, "\n")
@@ -52,16 +55,9 @@ if __name__ == '__main__':
     interval = verifyLI(E, n, g1, h1, b, proof_li, params_li)
     print("Interval:", interval, "\n")
 
-    print("Checking with tolerance...")
-    params_wt = paramsWT(t, l, s1)
-    proof_wt = proveWT(x, n, g1, h1, r1, a, b, E, params_wt)
-    print("Verifying with tolerance...")
-    tolerance = verifyWT(n, g1, h1, b, proof_wt, params_wt)
-    print("Interval:", tolerance, "\n")
-"""
     print("Checking Square Decomposition...")
-    params_sd = paramsSD(t, l, s1)
-    proof_sd = proveSD(x, n, g1, h1, r1, a, b, E, params_sd)
-    print("Verifying Square Decomposition...")
-    square_decomposition = verifySD(n, g1, h1, a, b, E, proof_sd, params_sd, True)
-    print("Square Decomposition:", square_decomposition, "\n")"""
+    params_wt = paramsSD(t, l, s1)
+    proof_wt = proveSD(x, n, g1, h1, r1, a, b, E, params_wt)
+    print("Verifying with tolerance...")
+    tolerance = verifySD(n, g1, h1, b, proof_wt, params_wt)
+    print("Interval:", tolerance, "\n")

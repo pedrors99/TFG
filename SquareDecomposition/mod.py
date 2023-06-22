@@ -2,11 +2,20 @@ import numpy as np
 
 
 class Mod:
+    """
+    Clase que representa un elemento en un módulo.
+    """
     def __init__(self, x, p):
         self.x = x % p
         self.p = p
 
     def __add__(self, y):
+        """
+        Suma de dos elementos.
+
+        :param y: Elemento a sumar.
+        :return: Resultado de la suma, x+y (mod n)..
+        """
         if isinstance(y, int):
             return Mod(self.x + y, self.p)
         if isinstance(y, Mod):
@@ -16,6 +25,12 @@ class Mod:
             self.assertFalse(True)
 
     def __sub__(self, y):
+        """
+        Diferencia de dos elementos.
+
+        :param y: Elemento a restar.
+        :return: Resultado de la diferencia, x-y (mod n)..
+        """
         if isinstance(y, int):
             return Mod(self.x - y, self.p)
         if isinstance(y, Mod):
@@ -25,12 +40,29 @@ class Mod:
             self.assertFalse(True)
 
     def __neg__(self):
+        """
+        Cálculo de opuestos.
+
+        :return: Opuesto, -x (mod n)..
+        """
         return Mod(self.p - self.x, self.p)
 
     def __eq__(self, y):
+        """
+        Igualdad en valor entre dos elementos.
+
+        :param y: Elemento a comparar.
+        :return: Resultado de la igualdad, x==y (mod n).
+        """
         return (self.x == y.x) and (self.p == y.p)
 
     def __mul__(self, y):
+        """
+        Multiplicación de dos elementos.
+
+        :param y: Elemento a multiplicar.
+        :return: Resultado de la multiplicación, x*y (mod n).
+        """
         if isinstance(y, int):
             return Mod(self.x * y, self.p)
         if isinstance(y, Mod):
@@ -40,6 +72,11 @@ class Mod:
             self.assertFalse(True)
 
     def inverse(self):
+        """
+        Cálculo de inversos utilizando el algoritmo extendido de Euclides.
+
+        :return: Inverso de x, x^(-1) (mod n).
+        """
         if self.x != 0:
             q = np.empty(0)
             r = np.array([self.p, self.x])
@@ -60,6 +97,12 @@ class Mod:
             return self
 
     def __pow__(self, n):
+        """
+        Cálculo de potencias.
+
+        :param n: Exponente.
+        :return: Resultado de la potencia, x^n (mod n).
+        """
         if self.x == 0 or self.x == 1:
             return Mod(self.x, self.p)
         else:
@@ -79,4 +122,9 @@ class Mod:
             return Mod(self.x, self.p)
 
     def __str__(self):
+        """
+        Función para imprimir un objeto de la clase por pantalla.
+
+        :return: String con los valores del objeto.
+        """
         return "{} (mod {})".format(self.x, self.p)

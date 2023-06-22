@@ -75,7 +75,7 @@
           <p>
             Para ello crearemos dos variables, E<sub>a<sub>1</sub></sub> y E<sub>b<sub>1</sub></sub>, que ocultarán secretos positivos, x<sub>a<sub>1</sub></sub><sup>2</sup> y x<sub>b<sub>1</sub></sub><sup>2</sup>, al ser cuadrados, utilizando Prove<sub>S</sub>. <br>
 
-            Creamos otras dos variables, E<sub>a<sub>2</sub></sub> y E<sub>b<sub>2</sub></sub>, que esconderán valores mayores que &#952;, x<sub>a<sub>2</sub></sub> y x<sub>b<sub>2</sub></sub>,utilizando Prove<sub>LI</sub> para demostrar que pertenecen a [&#952;, &#952;] <br>
+            Creamos otras dos variables, E<sub>a<sub>2</sub></sub> y E<sub>b<sub>2</sub></sub>, que esconderán valores mayores que &#952;, x<sub>a<sub>2</sub></sub> y x<sub>b<sub>2</sub></sub>,utilizando Prove<sub>LI</sub> para demostrar que pertenecen a [-&#952;, &#952;] <br>
 
             Entonces, tenemos que el valor escondido en E<sub>a</sub> es la suma de los números secretos escondidos en E<sub>a<sub>1</sub></sub> y en E<sub>a<sub>2</sub></sub>, y que el valor escondido en E<sub>b</sub> es la suma de los números secretos escondidos en E<sub>b<sub>1</sub></sub> y en E<sub>b<sub>2</sub></sub>, ya que: <br>
             $$E_{a} = \frac{E}{g^{a}} = g^{x-a}h^{r} = g^{x_{a}}h^{r} = g^{x_{a_{1}}^{2} + x_{a_{2}}}h^{r_{a_{1}} + r_{a_{2}}} = E_{a_{1}} \cdot E_{a_{2}}$$
@@ -165,7 +165,7 @@
         <button type="button" class="collapsible" style="width:75%"><b>Algoritmo</b></button>
         <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
           <p>E<sub>a</sub> = E/g<sup>a</sup> = {{proof_wt.E}}/{{inputs.g}}<sup>{{inputs.a}}</sup> = {{proof_wt.Ea}}</p>
-          <p>E<sub>b</sub> = g<sup>b</sup>/E = {{inputs.g}}<sup>{{inputs.a}}</sup>/{{proof_wt.E}} = {{proof_wt.Eb}}</p>
+          <p>E<sub>b</sub> = g<sup>b</sup>/E = {{inputs.g}}<sup>{{inputs.b}}</sup>/{{proof_wt.E}} = {{proof_wt.Eb}}</p>
           <br>
           <p>x<sub>a</sub> = x - a = {{inputs.x}} - {{inputs.a}} = {{ext_wt.xa}}</p>
           <p>x<sub>b</sub> = b - x = {{inputs.b}} - {{inputs.x}} = {{ext_wt.xb}}</p>
@@ -180,13 +180,13 @@
           <p>r<sub>a<sub>2</sub></sub> = {{ext_wt.ra2}}</p>
           <br>
           <p>Seleccionamos de forma aleatoria r<sub>b<sub>1</sub></sub> y r<sub>b<sub>2</sub></sub> tal que</p>
-          <p>r<sub>b<sub>1</sub></sub> + r<sub>b<sub>2</sub></sub> = -r = {{-r.r}}</p>
+          <p>r<sub>b<sub>1</sub></sub> + r<sub>b<sub>2</sub></sub> = -r = -{{r.r}}</p>
           <p>r<sub>b<sub>1</sub></sub> = {{ext_wt.rb1}}</p>
           <p>r<sub>b<sub>2</sub></sub> = {{ext_wt.rb2}}</p>
           <br>
           <p>E<sub>a<sub>1</sub></sub> = g<sup>x<sub>a<sub>1</sub></sub><sup>2</sup></sup> h<sup>r<sub>a<sub>1</sub></sub></sup> (mod n) = {{inputs.g}}<sup>{{ext_wt.xa1}}<sup>2</sup></sup> {{inputs.h}}<sup>{{ext_wt.ra1}}</sup> (mod {{inputs.n}}) = {{proof_wt.Ea1}}</p>
           <p>E<sub>a<sub>2</sub></sub> = g<sup>x<sub>a<sub>2</sub></sub></sup> h<sup>r<sub>a<sub>2</sub></sub></sup> (mod n) = {{inputs.g}}<sup>{{ext_wt.xa2}}</sup> {{inputs.h}}<sup>{{ext_wt.ra2}}</sup> (mod {{inputs.n}}) = {{proof_wt.Ea2}}</p>
-          <p>E<sub>b<sub>1</sub></sub> = g<sup>x<sub>b<sub>1</sub></sub><sup>2</sup></sup> h<sup>r<sub>b<sub>1</sub></sub></sup> (mod n) = {{inputs.g}}<sup>{{ext_wt.xa2}}<sup>2</sup></sup> {{inputs.h}}<sup>{{ext_wt.ra2}}</sup> (mod {{inputs.n}}) = {{proof_wt.Eb1}}</p>
+          <p>E<sub>b<sub>1</sub></sub> = g<sup>x<sub>b<sub>1</sub></sub><sup>2</sup></sup> h<sup>r<sub>b<sub>1</sub></sub></sup> (mod n) = {{inputs.g}}<sup>{{ext_wt.xa2}}<sup>2</sup></sup> {{inputs.h}}<sup>{{ext_wt.rb1}}</sup> (mod {{inputs.n}}) = {{proof_wt.Eb1}}</p>
           <p>E<sub>b<sub>2</sub></sub> = g<sup>x<sub>b<sub>2</sub></sub></sup> h<sup>r<sub>b<sub>2</sub></sub></sup> (mod n) = {{inputs.g}}<sup>{{ext_wt.xb2}}</sup> {{inputs.h}}<sup>{{ext_wt.rb2}}</sup> (mod {{inputs.n}}) = {{proof_wt.Eb2}}</p>
           <br>
           <p>proof<sub>S<sub>a</sub></sub> = Prove<sub>S</sub> (x<sub>a<sub>1</sub></sub>, n, E<sub>a<sub>1</sub></sub>, r<sub>a<sub>1</sub></sub>, g, h, a, b, (t, l, s)) = Prove<sub>S</sub> ({{ext_wt.xa1}}, {{inputs.n}}, {{proof_wt.Ea1}}, {{ext_wt.ra1}}, {{inputs.g}}, {{inputs.h}}, {{inputs.a}}, {{inputs.b}}, ({{params.t}}, {{params.l}}, {{params.s}})) = ({{proof_sa.E}}, {{proof_sa.F}}, ({{proof_sa.proof_c}}, {{proof_sa.proof_D}}, {{proof_sa.proof_D1}}, {{proof_sa.proof_D2}}))</p>

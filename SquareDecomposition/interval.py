@@ -1,4 +1,3 @@
-import math
 import random
 from dataclasses import dataclass
 
@@ -22,6 +21,20 @@ class proofLI:
 
 
 def proveLI(x, n, g, h, r, b, params, debug=False):
+    """
+    Algoritmo que construye la prueba de que un número comprometido pertenece a un intervalo I, donde:
+                 I = [-2^(params.t + params.l) * b, 2^(params.t + params.l) * b)
+
+    :param x: Número comprometido.
+    :param n: Módulo.
+    :param g: Base para el compromiso que esconde a x.
+    :param h: Base para el compromiso que esconde a x.
+    :param r: Elemento para construir el compromiso que esconde a x.
+    :param b: Cota superior del intervalo que contiene a x.
+    :param params: Parámetros de seguridad.
+    :param debug: Determina si imprimir información extra del funcionamiento por pantalla.
+    :return: Prueba de que el número comprometido pertenece al intervalo.
+    """
     loop = True
 
     while loop:
@@ -46,6 +59,19 @@ def proveLI(x, n, g, h, r, b, params, debug=False):
 
 
 def verifyLI(E, n, g, h, b, proof, params, debug=False):
+    """
+    Verificación de la prueba de que un secreto pertenece a un intervalo.
+
+    :param E: Compromiso que esconde el secreto.
+    :param n: Módulo.
+    :param g: Base del compromiso.
+    :param h: Base del compromiso.
+    :param b: Cota superior del intervalo que contiene al secreto.
+    :param proof: Prueba de que el secreto pertenece al intervalo.
+    :param proof: Prueba de qye ambos compromisos esconden el mismo secreto.
+    :param debug: Determina si imprimir información extra del funcionamiento por pantalla.
+    :return: True o False, dependiendo de si la verificación es correcta o incorrecta respectivamente.
+    """
     cond1 = (proof.c * b <= proof.D1 <= 2 ** (params.t + params.l) * b - 1)
     cond2 = (proof.C == utils.hash((Mod(g, n) ** proof.D1 * Mod(h, n) ** proof.D2 * Mod(E, n) ** (-proof.c)).x))
 

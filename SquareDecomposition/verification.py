@@ -1,14 +1,25 @@
 import random
 import numpy as np
+import time
 
 from tqdm import tqdm
 from mod import Mod
 import matplotlib.pyplot as plt
 import seaborn as sns
-from with_tolerance import paramsWT, proveWT, verifyWT
+from square_decomposition import paramsSD, proveSD, verifySD
 
 
 def addError(n, g, h, b, proof):
+    """
+    Modifica los resultados de una prueba para intentar fozar que la verificación sea incorrecta.
+
+    :param n: Módulo.
+    :param g: Base del compromiso.
+    :param h: Base del compromiso.
+    :param b: Intervalo superioral que pertenece el secreto.
+    :param proof: Prueba.
+    :return: Prueba modificada.
+    """
     size = 29
     error = np.random.choice([0, 1], size, p=[0.75, 0.25])
     while np.all(error == 0):
@@ -84,7 +95,12 @@ def addError(n, g, h, b, proof):
 
 
 if __name__ == '__main__':
-    ns = [13, 59, 157, 331, 647, 991, 1223, 1607, 2543, 4391, 7457, 11657, 16883, 23087, 32119]
+    timer = True
+    times = np.empty(0)
+
+    # ns = [13, 59, 157, 331, 647, 991, 1223, 1607, 2543, 4391, 7457, 11657, 16883, 23087, 32119]
+    # ns = [13, 1009, 2003, 3001, 4001, 5003, 6007, 7001, 8009, 9001, 10007, 11003, 12007, 13001, 14009]
+    ns = [31, 607, 1291, 2053, 2803, 3637, 4481, 5351, 6203, 7057, 7963, 8867, 9769, 10709, 11699]
 
     tp = 0
     fp = 0
@@ -92,6 +108,9 @@ if __name__ == '__main__':
     fn = 0
 
     for n in tqdm(ns, position=0, desc="Progreso total", bar_format='{l_bar}{bar:20}{r_bar}', colour='green'):
+        if timer:
+            seconds = time.time()
+
         for i in tqdm(range(200), position=1, desc="Progreso con n = {}".format(n), bar_format='{l_bar}{bar:20}{r_bar}', colour='green', leave=False):
             t = random.randint(1, 6)
             l = random.randint(1, 6)
@@ -108,10 +127,10 @@ if __name__ == '__main__':
             r = random.randint(-2 ** s * n - 1, 2 ** s * n + 1)
             E = (Mod(g, n) ** x * Mod(h, n) ** r).x
 
-            params = paramsWT(t, l, s)
+            params = paramsSD(t, l, s)
 
-            proof = proveWT(x, n, g, h, r, a, b, E, params)
-            result = verifyWT(n, g, h, b, proof, params)
+            proof = proveSD(x, n, g, h, r, a, b, E, params)
+            result = verifySD(n, g, h, b, proof, params)
 
             if result:
                 tp += 1
@@ -120,12 +139,15 @@ if __name__ == '__main__':
 
             g, h, b, proof = addError(n, g, h, b, proof)
 
-            result = verifyWT(n, g, h, b, proof, params)
+            result = verifySD(n, g, h, b, proof, params)
 
             if result:
                 fp += 1
             else:
                 tn += 1
+
+        if timer:
+            times = np.append(times, (time.time() - seconds)/200)
 
     print("\nVerdadero Positivo:  {}\t\tFalso Positivo: {}\nFalso Negativo: {}\t\tVerdadero Negativo:  {}".format(tp, fp, fn, tn))
     data = [[tp, fp], [fn, tn]]
@@ -136,4 +158,13 @@ if __name__ == '__main__':
     plt.xlabel("Número de Resultados Esperados")
     plt.ylabel("Número de Resultados Obtenidos")
     plt.show()
+    plt.clf()
+
+    if timer:
+        plt.plot(np.array(ns), times, linestyle='--', marker='o', color='b')
+        plt.title("Tiempos de ejecución")
+        plt.xlabel("Tamaño del módulo")
+        plt.ylabel("Tiempo medio (s)")
+        plt.show()
+        plt.clf()
 
