@@ -1,0 +1,37 @@
+\section{Conclusiones}
+
+Este trabajo comienza viendo algunas aplicaciones de los protocolos de conocimiento cero, y cómo su uso ha ido en aumento en los últimos años. Además, estos usos están afectando cada vez a más campos distinto e influyen elevadas cifras de dinero. Debido a todo esto, es fácil darse cuenta de la importancia que tienen dichos algoritmos, y de lo fundamental que puede ser conocerlos. Sin embargo, no se encontró ningún artículo o herramienta que facilite la formación en este campo.
+
+Todo esto motiva este TFG, que tiene como objetivo explicar el funcionamiento de los protocolos de conocimiento cero de una forma que sea fácil de entender y proporcionar herramientas que permitan ver cómo funcionan en detalle, con distintas entradas y explicando cada paso.
+
+Primero, se comenzó viendo brevemente la historia de los protocolos de conocimiento cero, centrándose en su origen y en sus posibles aplicaciones. También se buscaron artículos relacionados, aunque no se encontró ninguno que cumpla un papel similar a este trabajo.
+
+A continuación, se detalló la teoría detrás de estos protocolos, estudiando qué son y cuáles son los distintos tipos que existen. Además, se detalló el funcionamiento de algunos algoritmos, indicando paso a paso su funcionamiento incluso con algunos ejemplos, para así poder compararlos y elegir el más apropiado para implementar.
+
+Con esto, se pudo detallar los objetivos del TFG, que se pueden resumir en lo que sigue:
+\begin{enumerate}
+    \item Este documento, que incluye toda la base teórica, documentación e explicación del funcionamiento de las siguientes partes.
+
+    \item Implementación del algoritmo seleccionado en un lenguaje de programación.
+
+    \item Diseño de una herramienta que permita ver en detalle el funcionamiento del algoritmo.
+
+    \item Verificación de que el algoritmo seleccionado funciona tal y como esperamos, realizando distintas ejecuciones con distintos valores seleccionados de forma aleatoria.
+\end{enumerate}
+
+Finalmente, se realizó toda la implementación requerida para esos objetivos, y se documentó su funcionamiento en este documento. El trabajo consigue realizar todos los objetivos planteados, teniendo una herramienta que facilita el entendimiento del algoritmo con la cuál una persona que no conozca el funcionamiento de los protocolos de conocimiento cero, tras hacerse una idea de qué son estos protocolos con la información incluida en la sección \nameref{sec:teoria}, puede llegar a comprender su funcionamiento.
+
+Además, como se vio en la verificación de dicho algoritmo, funciona tal y como deseamos ya que cumple los requisitos de los protocolos de conocimiento cero, aceptando las pruebas verdaderas, rechazando la gran mayoría de las falsas y escondiendo toda la información relevante al secreto.
+
+\section{Líneas de Trabajo Futuro}
+
+Aunque el trabajo ha sido capaz de conseguir todos los objetivos propuestos, hay una serie de mejoras que permitirían un mayor conocimiento de los protocolos de conocimiento cero y que habría sido interesante su estudio e implementación si hubiésemos dispuesto de mas tiempo.
+
+Entre estas, cabe destacar:
+\begin{itemize}
+    \item Estudiar otros algoritmos ZKP. A pesar de que el objetivo de este trabajo era estudiar los protocolos de conocimiento cero en general, finalmente sólo se centra en uno, en \emph{Square Decomposition}. Aunque esto permite entender cuál es el objetivo de estos protocolos y algunos de los mecanismos utilizados para poder demostrar algo escondiendo el secreto, se habría conseguido un mayor entendimiento pudiendo ver el funcionamiento de varios algoritmos distintos.
+
+    En particular, cabe destacar tal y cómo se indicó en la \nameref{sec:seleccion}, las \emph{Bulletproofs}, que son algoritmos mucho más potentes, pero tienen el gran incoveniente de usar número demasiado grandes que, aunque no son un problema para un ordenador, dificulta en parte entender su funcionamiento.
+
+    \item Solucionar las pruebas falsas clasificadas como verdaderas. Como se comentó en la \nameref{sec:verificacion}, esto puede deberse a dos motivos: la tolerancia y que las pruebas falsas coincidan con alguna verdadera. En este segundo caso, no hay forma de solucionarlo, pero el primero puede ser solucionado haciendo los números de mayor tamaño, aunque se decidió no hacerlo por priorizar que sea más fácil de entender y más rápido de ejecutar.
+\end{itemize}

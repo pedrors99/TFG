@@ -1,0 +1,49 @@
+\section{Objetivos}
+
+El objetivo general de este trabajo de fin de grado es implementar una herramienta que facilite el estudio de las pruebas de conocimiento cero. Este objetivo puede dividirse en los siguientes objetivos específicos:
+
+\begin{enumerate} 
+    \item Conocer el funcionamiento y algunas de las posibles aplicaciones de los protocolos de conocimiento cero.
+
+    Para ello, se estudia qué son estos protocolos, así como los distintos tipos que existen, y se desarrolla el funcionamiento de tres protocolos distintos: Descomposición cuadrada, Basados en firma y Bulletproof. El trabajo se centra en particular en el primero de ellos, viendo en detalle su implementación con distintos ejemplos.
+
+    \item Desarrollo de una herramienta que permita al usuario experimentar con los protocolos de conocimiento cero, siendo posible interactuar con el mismo para ver como distintos valores producen resultados distintos, y como los secretos que el probador quiere ocultar son inaccesibles para el verificador.
+
+    \item Verificar el funcionamiento correcto se espera de dichos algoritmos, realizando distintas pruebas con valores de distintas magnitudes.
+\end{enumerate}
+
+ Además, se intenta conseguir los siguientes objetivos:
+\begin{enumerate}
+    \item La herramienta que permite al usuario experimentar con los protocolos de conocimiento cero pueda ser ejecutada en cualquier ordenador, sin importar el sistema operativo ni las especificaciones de dicho ordenador. Para ello, es implementada en una aplicación web.
+
+    \item Esa misma herramienta debe ser de fácil comprensión para que permita entender el funcionamiento del algoritmo de una manera sencilla.
+
+    \item Que la verificación del algoritmo sea lo suficientemente extensa como para poder afirmar que proporciona los resultados esperados.
+\end{enumerate}
+
+\section{Planificación}
+
+Para representar gráficamente el esfuerzo dedicado a cada tarea del trabajo, se detalla el tiempo dedicado a cada una de ellas. Para ello, el siguiente esquema indica las fechas de comienzo y finalización de cada una de las partes:
+\begin{itemize}
+    \item Planificación del trabajo. Este periodo incluye la búsqueda de artículos similares, que tratasen los protocolos de conocimiento cero aplicados a la docencia y, al no encontrar ninguno, decidir los objetivos de este trabajo.
+
+    \item Investigación de ZKP. Durante estos meses se llevo a cabo la investigación de los protocolos de conocimiento cero y de los diferentes algoritmos posibles. Básicamente, este periodo fue empleado para el desarrollo del \nameref{sec:teoria}.
+
+    \item Selección del algoritmo. Una vez estudiados los protocolos en general, se dedicó un tiempo a compararlos entre ellos y cuál podría ser el más interesante para implementar en este trabajo.
+
+    \item Implementación de Bulletproofs. En el capítulo \nameref{sec:seleccion} se comentó que los \emph{Bulletproofs} son unos de los algoritmos más interesantes. Debido a ello, fueron los primeros seleccionados para desarrollar. Sin embargo, fue durante este desarrollo que se vio que dichos algoritmos requieren el uso de números extremadamente grandes (de más de 64 cifras) debido a la curva generadora. Por esto, consideró descartarlos ya que el objetivo de este trabajo es facilitar el entendimiento del algoritmo, y números tan grandes hacen que sea muy complicado de seguir.
+
+    \item Implementación de Square Decomposition. Tras decidir que los \emph{Bulletproofs} no son los más apropiados para este trabajo, se decidió tomar el segundo algoritmo más interesante, la \emph{Descomposición cuadrada} o \emph{Square Decomposition}. Durante este periodo se realizó toda la implementación del algoritmo en Python viendo que los resultados eran los esperados.
+
+    \item Desarrollo de la herramienta docente. Una vez que se implemento el algoritmo, lo siguiente era crear la herramienta que facilitase su entendimiento. La mayor parte de este periodo fue dedicado a estudiar como implementarlo usando Flask.
+
+    \item Documentación. Finalmente, el último mes aproximadamente ha sido dedicado al desarrollo de este documento.
+\end{itemize}
+
+Estos plazos pueden verse resumidos en el gráfico de la \autoref{im:planificacion}.
+\begin{sidewaysfigure}[hbtp]
+    \centering
+    \includegraphics[width=\columnwidth]{images/Planificación.png}
+    \caption{Tiempo del desarrollo de la propuesta}
+    \label{im:planificacion}
+\end{sidewaysfigure}
