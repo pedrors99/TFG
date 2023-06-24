@@ -323,7 +323,9 @@ class proofLI:
     c: int
 \end{lstlisting}
 
-Recordemos que una prueba de pertenencia a un intervalo $[b_{1}, b_{2}]$ es una prueba de conocimiento que asegura al verificador que el probador conoce $x$ que pertenece a $[B_{1}, B_{2}]$, un intervalo que contiene a $[b_{1}, b_{2}]$, y el índice de expansión de una prueba de pertenencia a un intervalo es la cantidad $\delta = (B_{2} - B_{1})/(b_{2} - b_{1})$, y que el algoritmo de dicha prueba, que demuestra que un número comprometido $x \in I$ pertenece a $J$, donde la tasa de expansión $\#J/\#I$ (donde $\#I$ representa el cardinal de $I$) es igual a a $2^{t+\ell+1}$, era el siguiente: \\
+Una prueba de pertenencia a un intervalo $[b_{1}, b_{2}]$ es una prueba de conocimiento que asegura al verificador que el probador conoce $x$ tal que pertenece a $[B_{1}, B_{2}]$, un intervalo que contiene a $[b_{1}, b_{2}]$. Con estos términos, la tasa de expansión de una prueba de pertenencia a un intervalo es la cantidad $delta = (B_{2} - B_{1})/(b_{2} - b_{1})$.
+
+Recordemos que una prueba de que un número comprometido pertenece a un intervalo es la prueba de que un número $x \in I$ pertenece a $J$, siendo la tasa de expansión $\#J/\#I$ (donde $\#I$ representa el cardinal de $I$) igual a $2^{t+\ell+1}$, tiene el siguiente algoritmo: \\
 \begin{minipage}{0.9\textwidth}
     \begin{algorithm}[H]
         \caption{Prueba de intervalo mayor: $\operatorname{Prove_{LI}}$}

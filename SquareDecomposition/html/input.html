@@ -51,6 +51,9 @@
   </head>
 
   <body class="has-text-centered">
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
     <h1 class="title" style="font-size:3vw">
       Square Decomposition
     </h1>
@@ -58,6 +61,38 @@
     <form action="http://localhost:5000/" method="post">
       <div class="block">
         <div class="block">
+
+          <div class="block">
+            <button type="button" class="collapsible" style="width:75%"><b>Resumen</b></button>
+            <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
+              <p>
+                Una prueba de conocimiento cero (ZKP) permite probar la verdad de una declaración sin compartir el contenido de la declaración o revelar cómo descubrió la verdad.
+
+                Para que esto sea posible, los protocolos de conocimiento cero se basan en algoritmos que toman algunos datos como entrada y devuelven “verdadero” o “falso”  como salida.
+              </p>
+
+              <p>
+                Esta herramienta muestra el funcionamiento de un algoritmo ZKP, la Descomposición Cuadrada (Square Decomposition), que permite mostrar que un secreto numérico pertenece a un intervalo.
+
+                El secreto se esconde como:
+                $$E = g^{x}h^{r} (mod \text{ n})$$
+                Donde r se escoge de forma aleatoria. Como el módulo es una operación de un único sentido, esto permite que, aunque el verificador conozca los valores de E, g, h y n, no pueda conocer el valor de x.
+
+                Para ello, requiere como entradas:
+              </p>
+
+              <ul style="list-style: none">
+                <li>&#8226; x: Valor del secreto.</li>
+                <li>&#8226; n: Módulo al que pertenece el secreto y el intervalo.</li>
+                <li>&#8226; a: Cota inferior del intervalo.</li>
+                <li>&#8226; b: Cota superior del intervalo.</li>
+                <li>&#8226; g: Base utilizada para esconder el secreto.</li>
+                <li>&#8226; h: Base utilizada para esconder el secreto. Tiene que estar generada por h.</li>
+                <li>&#8226; t, l y s: Parámetros de seguridad.</li>
+              </ul>
+            </div>
+          </div>
+
           <button type="button" class="collapsible" style="width:75%"><b>Entrada</b></button>
           <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
 
@@ -79,7 +114,7 @@
                 <label class="label">n (Módulo)</label>
               </div>
               <div class="field-body">
-                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="n" id="n" maxlength="64" value="221">
+                <input class="input is-small is-rounded has-text-centered m-auto" type="text" name="n" id="n" maxlength="64" value="223">
               </div>
             </div>
 
