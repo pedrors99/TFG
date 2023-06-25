@@ -163,7 +163,7 @@
         <div class="content has-text-centered m-auto" style="background-color:aliceblue; padding:5px; width:75%;">
           <p>val1 = g<sub>1</sub><sup>D</sup> h<sub>1</sub><sup>D<sub>1</sub></sup> E<sup>-c</sup> (mod n) = {{val.g1}}<sup>{{proof.D}}</sup> {{val.h1}}<sup>{{proof.D1}}</sup> {{val.E}}<sup>-{{proof.c}}</sup> (mod {{n}}) = {{ext.val1}}</p>
           <p>val1 = g<sub>2</sub><sup>D</sup> h<sub>2</sub><sup>D<sub>2</sub></sup> F<sup>-c</sup> (mod n) = {{val.g2}}<sup>{{proof.D}}</sup> {{val.h2}}<sup>{{proof.D2}}</sup> {{val.F}}<sup>-{{proof.c}}</sup> (mod {{n}}) = {{ext.val2}}</p>
-          <p><b>if</b> (c == Hash(val1 || val2)) = ({{proof.c}} = Hash({{ext.val1}} || {{ext.val2}})) = ({{proof.c}} = {{ext.val3}}) = {{ext.cond}}</p>
+          <p><b>if</b> (c == Hash(val1 || val2)) = ({{proof.c}} == Hash({{ext.val1}} || {{ext.val2}})) = ({{proof.c}} == {{ext.val3}}) = {{ext.cond}}</p>
           <p>    <b>return</b> True</p>
           <p><b>else</b></p>
           <p>    <b>return</b> False</p>
