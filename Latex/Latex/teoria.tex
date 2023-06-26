@@ -127,13 +127,13 @@ A continuación se desarrollan, explicando su funcionamiento, los algoritmos de 
 
 Vamos a estudiar la Descomposición cuadrada en más detalle, desarrollándo en más detalle su funcionamiento. Para ello, añadiremos los distintos algoritmos que utiliza, así como ejemplos numéricos que faciliten su entendimiento. Además, desarrollaremos algunos de los conceptos matemáticos en los que se basa dicho algoritmo.
 
-Sea un entero positivo $x$, y sea $E = g^{x}h^{r}$, y supongamos que Alice quiere probar a Bob que $x \in [a, b]$.
+Sea un entero positivo $x$, y sea $E = g^{x}h^{r} (\operatorname{mod} \text{ n})$, y supongamos que Alice quiere probar a Bob que $x \in [a, b]$.
 
 Inicialmente, Alice escribe el entero positivo $x-a$ como la suma de $x_{1}^{2}$, el cuadrado mayor menor que $x$, y de $\rho$, un número positivo menor que $2\sqrt{x-a}$. Luego, selecciona aleatoriamente $r_{1}, r_{2}$ en $[0, 2^{s}n-1]$ de modo que $r_{1} + r_{2} = r$ y calcula $E_{1} = g^{x_{1}^{2}}h^{r{1}}$ y $E_{2} = g^{\rho}h^{r_{2}}$. Lee demuestra a Bob que $E_{1}$ oculta un cuadrado y que $E_{2}$ oculta un número cuyo valor absoluto es menor que $2^{t+\ell+1}\sqrt{b-a}$ mediante una prueba CFT. Finalmente, aplica el mismo método a $b-x$. Esto conduce a una demostración de que $x \in [a - 2^{t+\ell+1}\sqrt{b-a}, b + 2^{t+\ell+1}\sqrt{b-a}]$. La tasa de expansión de esta prueba es igual a $1 + (2^{t+\ell+1}/\sqrt{b-a})$, que se acerca a $1$ cuando $b-a$ es grande.
 
 Luego, aumentamos artificialmente el tamaño de $x$ estableciendo $x' = 2^{T}x$. Usando el esquema anterior, demostramos que $x' \in [2^{T}a - 2^{t+\ell+T / 2+1} \sqrt{b-a}, 2^{T}b + 2^{t+\ell+1} \sqrt{b-a}]$, y si $T$ es suficientemente grande (es decir, $T$ es tal que \\ $2^{t+\ell+T/2+1} \sqrt{b-a} < 2^{T}$), Bob está convencido de que $x' \in [2^{T}a - 2^{T} + 1, 2^{T}b + 2^{T} - 1]$, y entonces $x \in [a - \epsilon, b + \epsilon]$ donde $0 \leq \epsilon < 1$. Entonces, como $x$ es un número entero, Bob está convencido de que $x \in [a, b]$.
 
-Esta construcción requiere algunos bloques de construcción, como la prueba de conocimiento cero de que dos compromisos ocultan el mismo secreto y la prueba de conocimiento cero de que el secreto es un cuadrado.
+Esta construcción requiere algunos bloques de construcción, como la prueba de conocimiento cero de que dos compromisos ocultan el mismo secreto y la prueba de conocimiento cero de que el secreto es un cuadrado. Además, como el secreto se esconde utilizando la operación módulo, que es una función unidireccional, aunque el verificador conozca los valores de $E, g, h$ y $n$, no puede calcular el valor del secreto $x$.
 
 \subsubsection{Notación}
 
@@ -1187,7 +1187,7 @@ Es decir, tenemos el siguiente esquema:
 
 Y como se vio en la \autoref{im:comparacion}, el algoritmo \emph{Descomposición Cuadrada} funciona similar a las \emph{Bulletproofs}, pero más lento y con una complejidad de mayor tamaño.
 
-Como los \emph{Bulletproofs} no requieren establecimiento de confianza y son menores en tamaño, aunque sean algo más lentos, por lo que es uno de los algoritmos más interesantes hoy en día, y el principal que consideramos como objeto de este estudio. Sin embargo, debido a la complejidad de dicho algoritmo y que nuestro objetivo es facilitar la comprensión de los protocolos de conocimiento cero, decidimos centrarnos en uno más simple, la \emph{Descomposición Cuadrada}, ya que es más fácil comprender su funcionamiento utilizando la herramienta que desarrollaremos. Además, en septiembre del 2022 se publicó un artículo, \emph{Sharp: Short Relaxed Range Proofs} por Geoffroy Couteau, Dahmun Goudarzi, Michael Klooß y
+Como los \emph{Bulletproofs} no requieren establecimiento de confianza y son menores en tamaño, aunque sean algo más lentos, es uno de los algoritmos más interesantes hoy en día, y el principal que consideramos como objeto de este estudio. Sin embargo, debido a la complejidad de dicho algoritmo y que nuestro objetivo es facilitar la comprensión de los protocolos de conocimiento cero, decidimos centrarnos en uno más simple, la \emph{Descomposición Cuadrada}, ya que es más fácil comprender su funcionamiento utilizando la herramienta que desarrollaremos. Además, en septiembre del 2022 se publicó un artículo, \emph{Sharp: Short Relaxed Range Proofs} por Geoffroy Couteau, Dahmun Goudarzi, Michael Klooß y
 Michael Reichle \cite{Sharp}, que presenta un nuevo algoritmo, Sharp, basado en la \emph{Descomposición cuadrada} y cuyas pruebas son casi un 50\% más cortas que las de \emph{Bulletproof}, lo cual nos da incluso más motivos para seleccionar este algoritmo.
 
 \begin{figure}[H]

@@ -633,7 +633,7 @@ Además, se incluye una carpeta llamada \emph{html} con los distintos archivos u
 
 Por lo que, en resumen, tenemos una página inicial para las entradas, y una para cada prueba y para cada verificación, disponiendo en todas menos en la página de entrada los valores de entrada, el funcionamiento del algoritmo, la salida y, en caso de que utilice algún otro algoritmo, un botón para acceder a la página correspondiente a dicho algoritmo. Además, las pruebas incluyen botones para acceder a sus verificaciones.
 
-Un resumen de las diversas páginas y las conexiones entre ellas puede verse en el siguiente esquema de la \autoref{im:esquema}. En este esquema, una flecha indica que la página señalada es accesible pulsando el botón correspondiente desde la página en la que se origina la flecha. Aunque, como todas las páginas tienen un botón para volver anterior, es posible recorrerlo en el sentido contrario.
+Un resumen de las diversas páginas y las conexiones entre ellas puede verse en el esquema de la \autoref{im:esquema}. En este esquema, una flecha indica que la página señalada es accesible pulsando el botón correspondiente desde la página en la que se origina la flecha. Aunque, como todas las páginas tienen un botón para volver anterior, es posible recorrerlo en el sentido contrario.
 \begin{sidewaysfigure}[hbtp]
     \centering
     \includegraphics[width=\columnwidth]{images/Esquema.png}
@@ -676,7 +676,7 @@ Con todos estos resultados, se puede construir una matriz de confusión, que es 
 
 Estos resultados pueden variar debido a la aleatoriedad tanto en la selección de los valores discutidos en esta parte, como en la propia aleatoriedad de los algoritmos. Sin embargo, las pruebas verdaderas siempre las clasifica como verdaderas (es decir, satisface la completitud) y, de las pruebas falsas, casi todas son clasificadas como falsas.
 
-Para ello, se realizan varias pruebas, y el número de errores que se obtienen en cada una son los de la \autoref{im:resultados}. Esto demuestra que, aunque el número de errores puede variar, suele ser relativamente bajo, normalmente menor o igual a 3. Sabiendo que usa 15 valores distintos para el módulo, que se realizan 200 pruebas para cada uno de los valores y que para cada caso se realiza una prueba verdadera sin modificar y otra modificando los resultados, tenemos un total de 6000 pruebas, por lo que el error es inferior al 0.05\%.
+Para comprobarlo, se realizan varias pruebas, y el número de errores que se obtienen en cada una son los de la \autoref{im:resultados}. Esto demuestra que, aunque el número de errores puede variar, suele ser relativamente bajo, normalmente menor o igual a 3. Sabiendo que usa 15 valores distintos para el módulo, que se realizan 200 pruebas para cada uno de los valores y que para cada caso se realiza una prueba verdadera sin modificar y otra modificando los resultados, tenemos un total de 6000 pruebas, por lo que el error es inferior al 0.05\%.
 
 \begin{figure}[H]
     \centering
@@ -694,11 +694,34 @@ El hecho de que acepte estas pruebas falsas puede deberse a los siguientes motiv
 
 Finalmente se comprueba como afecta el tamaño del módulo al tiempo de ejecución. Para ello, se utiliza la biblioteca \emph{time} para guardar el tiempo antes y después de las 200 pruebas con cada uno de los valores seleccionados, y se calcula la media. Esto incluye tanto el tiempo de generar la prueba y verificarla, como el tiempo de modificarla y volver a modificarla. Los tiempos obtenidos se pueden ver en la \autoref{im:tiempos}.
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.75\textwidth]{images/tiempos.png}
-    \caption{Tiempos de ejecución}
+    \caption{Tiempos de ejecución con 34 módulos distintos}
     \label{im:tiempos}
 \end{figure}
 
-En esta figura se puede ver como el tiempo aumenta al aumentar el tamaño del módulo de forma aproximadamente lineal, aunque con cierto error debido a la aleatoriedad.
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[c]{0.6\textwidth}
+        \includegraphics[width=\textwidth]{images/lineal.png}
+        \caption{Regresión lineal}
+    \end{subfigure}
+    \begin{subfigure}[c]{0.6\textwidth}
+        \includegraphics[width=\textwidth]{images/exponencial.png}
+        \caption{Regresión exponencial}
+    \end{subfigure}
+    
+    \begin{subfigure}[c]{0.6\textwidth}
+        \includegraphics[width=\textwidth]{images/logaritmica.png}
+        \caption{Regresión exponencial}
+    \end{subfigure}
+    \caption{Regresiones lineal, exponencial y logarítmica}
+    \label{im:tiempos2}
+\end{figure}
+
+En la figura \autoref{im:tiempos2} se puede ver como, al ser mayor $R^{2}$ en el caso lineal, el tiempo aumenta al aumentar el tamaño del módulo de forma aproximadamente lineal, aunque con cierto error debido a la aleatoriedad. Para estas figuras, los módulos seleccionados son:
+
+$$[31, 607, 1291, 2053, 2803, 3637, 4481, 5351, 6203, 7057, 7963, 8867,$$
+$$9769, 10709, 11699, 12589, 13537, 14543, 15427, 16417, 17393, 18329, 19423,$$
+$$20357, 21379, 22303, 23297, 24247, 25357, 26371, 27409, 28447, 29401, 30517]$$
