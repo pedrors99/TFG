@@ -73,7 +73,7 @@ Estas funciones permiten tanto operar con otros objetos de esta misma clase, o c
 
 Finalmente, se representan las dos funciones más complejas en detalle, que son las que se usan para el cálculo de inversos y para las potencias. La primera de ellas se basa en el algoritmo extendido de Euclides, y queda de la siguiente forma:
 \begin{lstlisting}[language=Python, basicstyle=\footnotesize]
-        def inverse(self):
+    def inverse(self):
         if self.x != 0:
             q = np.empty(0)
             r = np.array([self.p, self.x])

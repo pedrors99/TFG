@@ -110,7 +110,7 @@ Las ZKRP pueden clasificarse en:
     \item Propuestas de representación binaria:
     \begin{itemize}
         \item Decomposición multi-base (\emph{Multi-base decomposition}):
-        Consiste en descomponer el elemento secreo en la representación binaria, lo que permite probar que pertenece al intervalo usando aritmética booleana. El probador tiene que proveer una prueba \emph{zero knowledge} de que cada bit del elemento secreto es de hecho un bit, y que la representación es válida. En lugar de una descomposición en bits, podemos usar una representación u-aria, obteniendo una mayor eficiencia.
+        Consiste en descomponer el elemento secreto en la representación binaria, lo que permite probar que pertenece al intervalo usando aritmética booleana. El probador tiene que proveer una prueba \emph{zero knowledge} de que cada bit del elemento secreto es de hecho un bit, y que la representación es válida. En lugar de una descomposición en bits, podemos usar una representación u-aria, obteniendo una mayor eficiencia.
         
         \item Compromisos homomórficos de dos niveles (\emph{Two-tiered homomorphic commitments}):
         Se basa en un argumento para multiplicación en \emph{batches} de elementos de $\mathbb{Z}_{p}$, que puede ser usado para probar que $u_{i}v_{i} = w_{i}$, con $u_{i}, v_{i}, w_{i} \in \mathbb{Z}_{p}$ para $0 < i < N$, siendo $N$ la longitud en bits del secreto. Para construir ZKRP, si los bits del secreto están dados por $w_{i}$, entonces el argumento puede usarse para mostrar que $w_{i}w_{i} = w_{i}$, lo que demuestra al verificador de que, de hecho, $w_{i} \in \{0, 1\}$. Además, mostró cómo probar que $w = \sum_{i=0}^{N} w_{i} 2^{i}$, demostrando así $w \in [0,2^{N})$. El argumento se puede adaptar fácilmente a un intervalo general $[A, B)$. La idea clave de la construcción de Groth es utilizar emparejamientos bilineales para comprometerse con un vector de compromisos de Pedersen. Por ejemplo, dado el emparejamiento $e: \mathbb{G}_{1} \times \mathbb{G}_{2} \to \mathbb{G}_{T}$ y los elementos $v, u_{1}, \dots, u_{N} \in \mathbb{G}{2}$, podemos comprometernos con el vector $[c_{1}, \dots, c_{N}] \in \mathbb{G}_{1}^{n}$ eligiendo un número aleatorio $t \in \mathbb{G}$ y calculando $C = e(t, v) \prod_{i=0}^{N} e(c_{i}, u_{i})$.
@@ -129,7 +129,7 @@ Vamos a estudiar la Descomposición cuadrada en más detalle, desarrollándo en 
 
 Sea un entero positivo $x$, y sea $E = g^{x}h^{r} (\operatorname{mod} \text{ n})$, y supongamos que Alice quiere probar a Bob que $x \in [a, b]$.
 
-Inicialmente, Alice escribe el entero positivo $x-a$ como la suma de $x_{1}^{2}$, el cuadrado mayor menor que $x$, y de $\rho$, un número positivo menor que $2\sqrt{x-a}$. Luego, selecciona aleatoriamente $r_{1}, r_{2}$ en $[0, 2^{s}n-1]$ de modo que $r_{1} + r_{2} = r$ y calcula $E_{1} = g^{x_{1}^{2}}h^{r{1}}$ y $E_{2} = g^{\rho}h^{r_{2}}$. Lee demuestra a Bob que $E_{1}$ oculta un cuadrado y que $E_{2}$ oculta un número cuyo valor absoluto es menor que $2^{t+\ell+1}\sqrt{b-a}$ mediante una prueba CFT. Finalmente, aplica el mismo método a $b-x$. Esto conduce a una demostración de que $x \in [a - 2^{t+\ell+1}\sqrt{b-a}, b + 2^{t+\ell+1}\sqrt{b-a}]$. La tasa de expansión de esta prueba es igual a $1 + (2^{t+\ell+1}/\sqrt{b-a})$, que se acerca a $1$ cuando $b-a$ es grande.
+Inicialmente, Alice escribe el entero positivo $x-a$ como la suma de $x_{1}^{2}$, el cuadrado mayor menor que $x$, y de $\rho$, un número positivo menor que $2\sqrt{x-a}$. Luego, selecciona aleatoriamente $r_{1}, r_{2}$ en $[0, 2^{s}n-1]$ de modo que $r_{1} + r_{2} = r$ y calcula $E_{1} = g^{x_{1}^{2}}h^{r_{1}} (\operatorname{mod} \text{ n})$ y $E_{2} = g^{\rho}h^{r_{2}} (\operatorname{mod} \text{ n})$. Le demuestra a Bob que $E_{1}$ oculta un cuadrado y que $E_{2}$ oculta un número cuyo valor absoluto es menor que $2^{t+\ell+1}\sqrt{b-a}$ mediante una prueba CFT. Finalmente, aplica el mismo método a $b-x$. Esto conduce a una demostración de que $x \in [a - 2^{t+\ell+1}\sqrt{b-a}, b + 2^{t+\ell+1}\sqrt{b-a}]$. La tasa de expansión de esta prueba es igual a $1 + (2^{t+\ell+1}/\sqrt{b-a})$, que se acerca a $1$ cuando $b-a$ es grande.
 
 Luego, aumentamos artificialmente el tamaño de $x$ estableciendo $x' = 2^{T}x$. Usando el esquema anterior, demostramos que $x' \in [2^{T}a - 2^{t+\ell+T / 2+1} \sqrt{b-a}, 2^{T}b + 2^{t+\ell+1} \sqrt{b-a}]$, y si $T$ es suficientemente grande (es decir, $T$ es tal que \\ $2^{t+\ell+T/2+1} \sqrt{b-a} < 2^{T}$), Bob está convencido de que $x' \in [2^{T}a - 2^{T} + 1, 2^{T}b + 2^{T} - 1]$, y entonces $x \in [a - \epsilon, b + \epsilon]$ donde $0 \leq \epsilon < 1$. Entonces, como $x$ es un número entero, Bob está convencido de que $x \in [a, b]$.
 
@@ -139,7 +139,7 @@ Esta construcción requiere algunos bloques de construcción, como la prueba de 
 
 Denotamos por $x \in_{R} [a, b]$ a la elección de forma aleatoria de un elemento $x$ en el intervalo $[a, b]$.
 
-Denotamos por $\lfloor x \rceil$ al entero más cercano a $x$, por $\lfloor x \rfloor$ al entero menor que $x$ más cercano a $x$, y por $\lceil x \rceil$ al entero mayor que $x$ más cercano a $x$. Es decir, si $x \in [a, a+1]$, con $a \in \mathbb{Z}$, entonces $\lfloor x \rfloor = a+1$ y $\lceil x \rceil = a$. Nótese que si $x \in \mathbb{Z}$, entonces $\lfloor x \rceil = \lfloor x \rfloor = \lceil x \rceil = x$.
+Denotamos por $\lfloor x \rceil$ al entero más cercano a $x$, por $\lfloor x \rfloor$ al entero menor que $x$ más cercano a $x$, y por $\lceil x \rceil$ al entero mayor que $x$ más cercano a $x$. Es decir, si $x \in [a, a+1]$, con $a \in \mathbb{Z}$, entonces $\lfloor x \rfloor = a$ y $\lceil x \rceil = a + 1$. Nótese que si $x \in \mathbb{Z}$, entonces $\lfloor x \rceil = \lfloor x \rfloor = \lceil x \rceil = x$.
 
 Finalmente, denotamos por $a||b$ a la concatenación de los \emph{strings} $a$ y $b$.
 
@@ -260,7 +260,7 @@ $$a \cdot b \equiv 1 (\operatorname{mod} n)$$
 Esto es:
 $$a \cdot b + n \cdot x = 1$$
 Utilizamos el algoritmo extendido de Euclídes para calcular 
-$$1 = (a, n) = u \cdot a + v \cdot n$$
+$$1 = mcd(a, n) = u \cdot a + v \cdot n$$
 Por lo que:
 $$1 \equiv u \cdot a + v \cdot n \equiv u \cdot a (\operatorname{mod} n)$$
 Tenemos que $u$ es el inverso de $a$.
@@ -389,7 +389,7 @@ Nótese que, como queríamos, el verificador no tiene acceso en ningún momento 
 
 Denotamos la prueba de conocimiento cero de que un secreto es un cuadrado por $\operatorname{PK_{S}} = \{x, r_{1}: E = g^{x^{2}} h^{r}\}$. Tenemos que $\operatorname{params_{S}} = (t, \ell, s)$ representa los parámetros para el esquema $PK_{S}$, por lo que la solidez está dada por $2^{t-1}$ y la propiedad de conocimiento cero está garantizada si $\sfrac{1}{\ell}$ es despreciable, como antes. Los siguientes algoritmos corresponden a $\operatorname{Prove_{S}}$ y $\operatorname{Verify_{S}}$, respectivamente. Además, el logaritmo discreto de $g$ con respecto a $h$, o su inversa, debe ser desconocido, de lo contrario el compromiso no es seguro.
 
-Supongamos que Alice tiene en secreto $x \in [0, b]$. Sea $E = g^{x^{2}} h^{r}$ un compromiso con el cuadrado de $x$. Quiere demostrarle a Bob que conoce $x$ y $r_{1}$ tal que $E = g^{x^{2}} h^{r}$, es decir, que $E$ oculta el cuadrado $x^{2}$. Entonces: \\
+Supongamos que Alice tiene en secreto $x \in [0, b]$. Sea $E = g^{x^{2}} h^{r} (\operatorname{mod} \text{ n})$ un compromiso con el cuadrado de $x$. Quiere demostrarle a Bob que conoce $x$ y $r_{1}$ tal que $E = g^{x^{2}} h^{r} (\operatorname{mod} \text{ n})$, es decir, que $E$ oculta el cuadrado $x^{2}$. Entonces: \\
 \begin{minipage}{0.9\textwidth}
     \begin{algorithm}[H] \label{alg:prove s}
         \caption{Prueba de Cuadrado: $\operatorname{Prove_{S}}$}
