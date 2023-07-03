@@ -241,9 +241,9 @@
 
     Con estos términos, una prueba de conocimiento cero cumple:
     \begin{itemize}
-        \item \textbf{Completitud:} 
+        \item \textbf{Completitud:} Si $w$ satisface $x$, tenemos:
         $$Verify(Prove(x, w)) = 1$$
-        \item \textbf{Solidez:}
+        \item \textbf{Solidez:} Si $w$ no satisface $x$, tenemos:
         $$P[Verify(Prove(x, w)) = 1] \text{ es suficientemente baja.}$$
         \item \textbf{Conocimiento cero:} El verificador no aprende nada sobre una declaración más allá de su validez o falsedad.
     \end{itemize}
